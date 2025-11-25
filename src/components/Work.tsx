@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Instagram, Play, X } from 'lucide-react';
 import { portfolioProjects } from '../data/portfolio';
+import scribblePortrait from 'figma:asset/dcd95ebd7ba39833f0168136c6e6d7463db90156.png';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -21,7 +22,7 @@ export function Work({ onNavigate }: WorkProps) {
         {/* Background Image (4번) */}
         <div className="absolute inset-0 z-0">
           <motion.img
-            src="/images/scribble-portrait.png"
+            src={scribblePortrait}
             alt="Work Background"
             className="w-full h-full object-cover opacity-30"
             initial={{ scale: 1.2 }}

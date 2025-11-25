@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Instagram, Mail, MapPin, Send } from 'lucide-react';
 import emailjs from '@emailjs/browser';

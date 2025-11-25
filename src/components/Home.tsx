@@ -1,7 +1,10 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Instagram } from 'lucide-react';
 import { portfolioProjects } from '../data/portfolio';
+import toddLogo from 'figma:asset/347c327e93f757b38013444742883c32c7d05493.png';
+import twoCows from 'figma:asset/a82612d2cba4580a0a02341ee522bea35c57bcc9.png';
+import scribbleBouquet from 'figma:asset/2a6b7d26ee1079d59100c62d21691eb97f60310b.png';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -27,7 +30,7 @@ export function Home({ onNavigate }: HomeProps) {
         {/* Logo Container */}
         <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center">
           <img
-            src="/images/todd-logo.png"
+            src={toddLogo}
             alt="TODD Logo"
             className="w-full h-full object-contain"
           />
@@ -220,7 +223,7 @@ export function Home({ onNavigate }: HomeProps) {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <img
-            src="/images/two-cows.png"
+            src={twoCows}
             alt="Two Cows"
             className="w-full h-auto object-contain"
           />
@@ -526,7 +529,7 @@ export function Home({ onNavigate }: HomeProps) {
               transition={{ duration: 0.6 }}
             >
               <img
-                src="/images/scribble-bouquet.png"
+                src={scribbleBouquet}
                 alt="Scribble Archive"
                 className="w-full h-full object-cover"
               />

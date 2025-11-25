@@ -27,9 +27,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#4a5fdc",
     tags: ["UI/UX", "Web", "Fashion"],
     images: {
-      main: "/images/portfolio/rb-3.png",
-      image2: "/images/portfolio/rb-main.png",
-      image3: "/images/portfolio/rb-2.png",
+      main: "/images/portfolio/rb/main.png",
+      image2: "/images/portfolio/rb/2.png",
+      image3: "/images/portfolio/rb/3.png",
     },
   },
   {
@@ -42,9 +42,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#1a1a1a",
     tags: ["Web", "Minimalist"],
     images: {
-      main: "/images/portfolio/bw-main.png",
-      image2: "/images/portfolio/bw-2.png",
-      image3: "/images/portfolio/bw-3.png",
+      main: "/images/portfolio/bw/main.png",
+      image2: "/images/portfolio/bw/2.png",
+      image3: "/images/portfolio/bw/3.png",
     },
   },
   {
@@ -57,9 +57,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#4ecdc4",
     tags: ["Branding", "Web"],
     images: {
-      main: "/images/portfolio/mist-main.png",
-      image2: "/images/portfolio/mist-2.png",
-      image3: "/images/portfolio/mist-3.png",
+      main: "/images/portfolio/mist/main.png",
+      image2: "/images/portfolio/mist/2.png",
+      image3: "/images/portfolio/mist/3.png",
     },
   },
   {
@@ -72,9 +72,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#ffe66d",
     tags: ["E-commerce", "Web", "3D"],
     images: {
-      main: "/images/portfolio/yellow-main.png",
-      image2: "/images/portfolio/yellow-2.png",
-      image3: "/images/portfolio/yellow-3.png",
+      main: "/images/portfolio/yellow/main.png",
+      image2: "/images/portfolio/yellow/2.png",
+      image3: "/images/portfolio/yellow/3.png",
     },
   },
 ];

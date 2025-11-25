@@ -5,7 +5,6 @@ import { Work } from './components/Work';
 import { Insights } from './components/Insights';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
-import toddLogo from 'figma:asset/347c327e93f757b38013444742883c32c7d05493.png';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 

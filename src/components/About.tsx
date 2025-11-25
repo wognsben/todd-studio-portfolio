@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Instagram, Sparkles, Target, Zap, Users } from 'lucide-react';
-import scribbleBlue from 'figma:asset/d6c974dcd4689ee0b01faa57207ef6bcfe06d967.png';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -43,7 +42,7 @@ export function About({ onNavigate }: AboutProps) {
         {/* Background Image (9번) */}
         <div className="absolute inset-0 z-0">
           <motion.img
-            src={scribbleBlue}
+            src="/images/scribble-blue.png"
             alt="About Background"
             className="w-full h-full object-cover opacity-30"
             initial={{ scale: 1.2 }}

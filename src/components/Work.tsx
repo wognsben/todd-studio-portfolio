@@ -84,7 +84,7 @@ export function Work({ onNavigate }: WorkProps) {
                 {/* Project Header */}
                 <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                   <div>
-                    <div className="text-9xl opacity-10 leading-none mb-4">
+                    <div className="text-6xl sm:text-7xl lg:text-9xl opacity-10 leading-none mb-4">
                       {String(project.id).padStart(2, '0')}
                     </div>
                     <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-4">

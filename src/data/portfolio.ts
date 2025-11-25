@@ -1,16 +1,4 @@
 // Portfolio data shared across Home and Work pages
-import rbMain from "figma:asset/6a7575571474ebf4591c967ab1e6418384ba06b1.png";
-import rbImage2 from "figma:asset/d412fb27c69f69d36d0cbffd88b059281e8b83ed.png";
-import rbImage3 from "figma:asset/bad6b33e2ce93baf945c4c3d01c23b4902a3a132.png";
-import bwMain from "figma:asset/3c576367987f0b1544d49df23f3b39859ba41267.png";
-import bwImage2 from "figma:asset/7cf9c46d5d6c9269b6f36bcd004ea41b1918b5e0.png";
-import bwImage3 from "figma:asset/dfe4ee2f9bfa01cde2a15eb4ab44cbf3a1fcc76e.png";
-import mistMain from "figma:asset/710982991a83cb09d6719798395dd2feffd1943a.png";
-import mistImage2 from "figma:asset/564fb4953c719c3a3be8b9725767596657850d0e.png";
-import mistImage3 from "figma:asset/850ddb83e1d85608807bff85313a56431c85281e.png";
-import yellowMain from "figma:asset/983dd6b4ec0dd780a2a30fabd5a275437c3f3689.png";
-import yellowImage2 from "figma:asset/06a2f90cafc3c201c8bb2aa0a27e5dd8830b725d.png";
-import yellowImage3 from "figma:asset/14b89926704be66532d28bbd529bb38d8ff8734a.png";
 
 export interface PortfolioProject {
   id: number;
@@ -39,9 +27,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#4a5fdc",
     tags: ["UI/UX", "Web", "Fashion"],
     images: {
-      main: rbImage3,
-      image2: rbMain,
-      image3: rbImage2,
+      main: "/images/portfolio/rb-3.png",
+      image2: "/images/portfolio/rb-main.png",
+      image3: "/images/portfolio/rb-2.png",
     },
   },
   {
@@ -54,9 +42,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#1a1a1a",
     tags: ["Web", "Minimalist"],
     images: {
-      main: bwMain,
-      image2: bwImage2,
-      image3: bwImage3,
+      main: "/images/portfolio/bw-main.png",
+      image2: "/images/portfolio/bw-2.png",
+      image3: "/images/portfolio/bw-3.png",
     },
   },
   {
@@ -69,9 +57,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#4ecdc4",
     tags: ["Branding", "Web"],
     images: {
-      main: mistMain,
-      image2: mistImage2,
-      image3: mistImage3,
+      main: "/images/portfolio/mist-main.png",
+      image2: "/images/portfolio/mist-2.png",
+      image3: "/images/portfolio/mist-3.png",
     },
   },
   {
@@ -84,9 +72,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#ffe66d",
     tags: ["E-commerce", "Web", "3D"],
     images: {
-      main: yellowMain,
-      image2: yellowImage2,
-      image3: yellowImage3,
+      main: "/images/portfolio/yellow-main.png",
+      image2: "/images/portfolio/yellow-2.png",
+      image3: "/images/portfolio/yellow-3.png",
     },
   },
 ];

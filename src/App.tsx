@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Home } from './components/Home';
-import { Shop } from './components/Shop';
-import { Blog } from './components/Blog';
+import { Work } from './components/Work';
+import { Insights } from './components/Insights';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import toddLogo from 'figma:asset/347c327e93f757b38013444742883c32c7d05493.png';
 
-type PageType = 'home' | 'shop' | 'blog' | 'about' | 'contact';
+type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -15,8 +15,8 @@ export default function App() {
 
   const navItems = [
     { id: 'home' as PageType, label: 'Home', number: '01' },
-    { id: 'shop' as PageType, label: 'Shop', number: '02' },
-    { id: 'blog' as PageType, label: 'Blog', number: '03' },
+    { id: 'work' as PageType, label: 'Work', number: '02' },
+    { id: 'insights' as PageType, label: 'Insights', number: '03' },
     { id: 'about' as PageType, label: 'About', number: '04' },
     { id: 'contact' as PageType, label: 'Contact', number: '05' },
   ];
@@ -222,8 +222,8 @@ export default function App() {
           className="relative"
         >
           {currentPage === 'home' && <Home />}
-          {currentPage === 'shop' && <Shop />}
-          {currentPage === 'blog' && <Blog />}
+          {currentPage === 'work' && <Work />}
+          {currentPage === 'insights' && <Insights />}
           {currentPage === 'about' && <About />}
           {currentPage === 'contact' && <Contact />}
         </motion.main>

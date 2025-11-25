@@ -1,338 +1,424 @@
 import { motion } from 'motion/react';
-import { MapPin, Phone, Mail, Clock, Minus, Send } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
+import { useState } from 'react';
+import { Instagram, Mail, MapPin, Send } from 'lucide-react';
 
 export function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+  });
+
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    // Handle form submission
+  };
+
   const contactInfo = [
     {
-      icon: MapPin,
-      title: "Visit Us",
-      details: ["123 Design Street", "Gangnam-gu, Seoul 06000", "South Korea"]
+      icon: <Mail className="w-6 h-6" />,
+      label: "Email",
+      value: "wognsben19977@naver.com",
+      color: "#4a5fdc",
     },
     {
-      icon: Phone,
-      title: "Call Us",
-      details: ["+82 2 1234 5678", "+82 10 9876 5432"]
+      icon: <MapPin className="w-6 h-6" />,
+      label: "Location",
+      value: "Seoul, South Korea",
+      color: "#ff6b6b",
     },
-    {
-      icon: Mail,
-      title: "Email Us",
-      details: ["hello@lineblooms.com", "orders@lineblooms.com"]
-    },
-    {
-      icon: Clock,
-      title: "Hours",
-      details: ["Mon-Fri: 10:00 - 19:00", "Sat: 11:00 - 18:00", "Sun: Closed"]
-    }
   ];
 
   return (
-    <div className="relative">
-      {/* Section 1: Contact Form */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-16">
-            {/* Left: Heading & Info */}
-            <div className="lg:col-span-2 space-y-8">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <h1 
-                  className="text-5xl sm:text-6xl text-[#4a5fdc] mb-4"
-                  style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
-                >
-                  Get in Touch
-                </h1>
-                <motion.div
-                  className="w-24 h-px bg-[#4a5fdc]"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                />
-              </motion.div>
+    <div className="relative bg-black text-white min-h-screen pt-20">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
+        {/* Animated Background Grid */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px',
+            }}
+          />
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, rgba(74,95,220,0.1), transparent 50%)',
+            }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-gray-600 leading-relaxed"
-              >
-                Have a question about our bouquets? Want to discuss a custom arrangement? 
-                Or simply wish to say hello? We'd love to hear from you.
-              </motion.p>
-
-              {/* Decorative Lines */}
-              <div className="flex gap-4 pt-4">
-                <Minus className="h-6 w-6 text-[#4a5fdc]" />
-                <motion.div
-                  className="flex-1 h-px bg-[#4a5fdc] opacity-40 self-center"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                />
-              </div>
-
-              {/* Quick note */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.6 }}
-                className="relative bg-gray-50 p-6 border-l-2 border-[#4a5fdc]"
-              >
-                <p className="text-sm text-gray-600">
-                  <span className="text-[#4a5fdc]" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                    Note:
-                  </span>
-                  {" "}We typically respond within 24 hours. For urgent orders, please call us directly.
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Right: Form */}
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left - Hero Text */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="lg:col-span-3"
             >
-              <div className="relative">
-                {/* Deconstructed frame */}
-                <div className="absolute -inset-4 border-2 border-[#4a5fdc] opacity-20 transform rotate-1" />
-                
-                <form className="relative bg-white p-8 space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm text-gray-600">Your Name</label>
-                      <div className="relative">
-                        <Input 
-                          type="text"
-                          placeholder="Kim Soo-jin"
-                          className="border-2 border-[#4a5fdc] focus:border-[#2c3a8f] rounded-none"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-[#4a5fdc] opacity-40" />
-                      </div>
-                    </div>
+              <div className="text-sm tracking-[0.4em] text-gray-500 mb-8">— GET IN TOUCH —</div>
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl leading-none mb-8">
+                <span className="text-transparent" style={{ WebkitTextStroke: '3px white' }}>
+                  Let's
+                </span>
+                <br />
+                <span className="text-white">Create</span>
+                <br />
+                <span className="text-transparent" style={{ WebkitTextStroke: '3px #4a5fdc' }}>
+                  Together
+                </span>
+              </h1>
+              <p className="text-xl text-gray-400 leading-relaxed mb-12">
+                새로운 프로젝트를 함께 시작해보세요.<br />
+                대담하고 실험적인 결과물을 만들어드립니다.
+              </p>
 
-                    <div className="space-y-2">
-                      <label className="text-sm text-gray-600">Your Email</label>
-                      <div className="relative">
-                        <Input 
-                          type="email"
-                          placeholder="you@email.com"
-                          className="border-2 border-[#4a5fdc] focus:border-[#2c3a8f] rounded-none"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-[#4a5fdc] opacity-40" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm text-gray-600">Phone (Optional)</label>
-                    <div className="relative">
-                      <Input 
-                        type="tel"
-                        placeholder="+82 10 1234 5678"
-                        className="border-2 border-[#4a5fdc] focus:border-[#2c3a8f] rounded-none"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-[#4a5fdc] opacity-40" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm text-gray-600">Subject</label>
-                    <div className="relative">
-                      <Input 
-                        type="text"
-                        placeholder="Custom bouquet inquiry"
-                        className="border-2 border-[#4a5fdc] focus:border-[#2c3a8f] rounded-none"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-[#4a5fdc] opacity-40" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm text-gray-600">Message</label>
-                    <div className="relative">
-                      <Textarea 
-                        placeholder="Tell us about your vision..."
-                        rows={6}
-                        className="border-2 border-[#4a5fdc] focus:border-[#2c3a8f] rounded-none resize-none"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 border-r-2 border-b-2 border-[#4a5fdc] opacity-40" />
-                    </div>
-                  </div>
-
+              {/* Contact Info Cards */}
+              <div className="space-y-4">
+                {contactInfo.map((info, index) => (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.2 }}
+                    key={index}
+                    className="group flex items-center gap-4 p-4 border border-white/10 hover:border-white/30 transition-all"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    whileHover={{ x: 10, scale: 1.02 }}
                   >
-                    <Button 
-                      className="w-full sm:w-auto bg-[#4a5fdc] hover:bg-[#2c3a8f] text-white px-12 py-6 rounded-none border-2 border-[#4a5fdc] group"
+                    <motion.div
+                      className="flex-shrink-0"
+                      style={{ color: info.color }}
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.6 }}
                     >
-                      Send Message
-                      <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                      {info.icon}
+                    </motion.div>
+                    <div>
+                      <div className="text-xs text-gray-500 mb-1">{info.label}</div>
+                      <div className="text-lg">{info.value}</div>
+                    </div>
                   </motion.div>
+                ))}
+              </div>
+
+              {/* Social Links */}
+              <motion.div
+                className="flex gap-4 mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <a 
+                  href="#" 
+                  className="w-12 h-12 border border-white/20 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#4a5fdc] hover:to-[#ff6b6b] hover:border-transparent transition-all group"
+                >
+                  <Instagram className="w-5 h-5 text-white" />
+                </a>
+                <a 
+                  href="https://blog.naver.com/toddstudio" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-12 h-12 border border-white/20 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#4a5fdc] hover:to-[#ff6b6b] hover:border-transparent transition-all text-sm"
+                >
+                  BL
+                </a>
+              </motion.div>
+            </motion.div>
+
+            {/* Right - Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative p-8 border-2 border-white/10 backdrop-blur-sm">
+                {/* Form Header */}
+                <div className="mb-8">
+                  <h2 className="text-3xl mb-2">Start a Project</h2>
+                  <p className="text-gray-500 text-sm">모든 항목을 작성해주세요</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name Field */}
+                  <div className="relative">
+                    <motion.label
+                      className={`absolute left-0 transition-all pointer-events-none ${
+                        focusedField === 'name' || formData.name
+                          ? '-top-6 text-xs text-[#4a5fdc]'
+                          : 'top-4 text-gray-500'
+                      }`}
+                      animate={{
+                        y: focusedField === 'name' || formData.name ? 0 : 0,
+                      }}
+                    >
+                      Name *
+                    </motion.label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onFocus={() => setFocusedField('name')}
+                      onBlur={() => setFocusedField(null)}
+                      className="w-full bg-transparent border-b-2 border-white/20 focus:border-[#4a5fdc] py-4 text-white placeholder:text-gray-600 focus:outline-none transition-colors"
+                      required
+                    />
+                  </div>
+
+                  {/* Email Field */}
+                  <div className="relative">
+                    <motion.label
+                      className={`absolute left-0 transition-all pointer-events-none ${
+                        focusedField === 'email' || formData.email
+                          ? '-top-6 text-xs text-[#4a5fdc]'
+                          : 'top-4 text-gray-500'
+                      }`}
+                    >
+                      Email *
+                    </motion.label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onFocus={() => setFocusedField('email')}
+                      onBlur={() => setFocusedField(null)}
+                      className="w-full bg-transparent border-b-2 border-white/20 focus:border-[#4a5fdc] py-4 text-white placeholder:text-gray-600 focus:outline-none transition-colors"
+                      required
+                    />
+                  </div>
+
+                  {/* Company Field */}
+                  <div className="relative">
+                    <motion.label
+                      className={`absolute left-0 transition-all pointer-events-none ${
+                        focusedField === 'company' || formData.company
+                          ? '-top-6 text-xs text-[#4a5fdc]'
+                          : 'top-4 text-gray-500'
+                      }`}
+                    >
+                      Company
+                    </motion.label>
+                    <input
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      onFocus={() => setFocusedField('company')}
+                      onBlur={() => setFocusedField(null)}
+                      className="w-full bg-transparent border-b-2 border-white/20 focus:border-[#4a5fdc] py-4 text-white placeholder:text-gray-600 focus:outline-none transition-colors"
+                    />
+                  </div>
+
+                  {/* Message Field */}
+                  <div className="relative">
+                    <motion.label
+                      className={`absolute left-0 transition-all pointer-events-none ${
+                        focusedField === 'message' || formData.message
+                          ? '-top-6 text-xs text-[#4a5fdc]'
+                          : 'top-4 text-gray-500'
+                      }`}
+                    >
+                      Message *
+                    </motion.label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onFocus={() => setFocusedField('message')}
+                      onBlur={() => setFocusedField(null)}
+                      className="w-full bg-transparent border-b-2 border-white/20 focus:border-[#4a5fdc] py-4 text-white placeholder:text-gray-600 focus:outline-none transition-colors resize-none"
+                      rows={4}
+                      required
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <motion.button
+                    type="submit"
+                    className="w-full py-4 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white text-lg flex items-center justify-center gap-3 hover:shadow-2xl transition-all group"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    SEND MESSAGE
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <Send className="w-5 h-5" />
+                    </motion.div>
+                  </motion.button>
                 </form>
+
+                {/* Decorative Elements */}
+                <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#4a5fdc] opacity-20 blur-3xl" />
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-[#ff6b6b] opacity-20 blur-3xl" />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Section 2: Contact Info Cards */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 bg-opacity-30">
-        <div className="max-w-7xl mx-auto">
+      {/* FAQ Section */}
+      <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-t border-white/10">
+        <div className="max-w-[1000px] mx-auto">
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 
-              className="text-4xl sm:text-5xl text-[#2c3a8f] mb-4"
-              style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
-            >
-              Find Us
+            <div className="text-sm tracking-[0.4em] text-gray-500 mb-4">— FAQ —</div>
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl">
+              <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>
+                Common Questions
+              </span>
             </h2>
-            <div className="flex justify-center items-center gap-4 mt-6">
-              <div className="w-16 h-px bg-[#4a5fdc]" />
-              <Minus className="h-6 w-6 text-[#4a5fdc]" />
-              <div className="w-16 h-px bg-[#4a5fdc]" />
-            </div>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contactInfo.map((info, index) => (
+          <div className="space-y-0">
+            {[
+              {
+                question: "프로젝트는 얼마나 걸리나요?",
+                answer: "프로젝트 규모에 따라 다르지만, 일반적으로 2-8주 정도 소요됩니다."
+              },
+              {
+                question: "어떤 서비스를 제공하나요?",
+                answer: "UI/UX 디자인, 프론트엔드 개발, 브랜딩 등 전반적인 디지털 경험을 제공합니다."
+              },
+              {
+                question: "견적은 어떻게 받나요?",
+                answer: "연락 주시면 프로젝트 내용을 듣고 맞춤 견적을 제공해드립니다."
+              },
+              {
+                question: "작은 프로젝트도 가능한가요?",
+                answer: "네, 프로젝트 규모와 상관없이 열정을 갖고 임합니다."
+              },
+            ].map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                className="group border-t border-white/10 py-8 hover:bg-white/5 transition-all cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative group"
-                style={{ transform: index % 2 === 0 ? 'rotate(-1deg)' : 'rotate(1deg)' }}
+                transition={{ delay: index * 0.05 }}
+                whileHover={{ x: 10 }}
               >
-                {/* Deconstructed border */}
-                <div className="absolute -inset-3 border border-[#4a5fdc] opacity-30 group-hover:opacity-50 transition-opacity" />
-                
-                <div className="relative bg-white p-8 text-center space-y-4">
-                  {/* Icon */}
-                  <div className="relative inline-block">
-                    <div className="absolute inset-0 border border-[#4a5fdc] opacity-20 transform rotate-6" />
-                    <div className="relative bg-white p-4 border border-[#4a5fdc] border-opacity-40">
-                      <info.icon className="h-8 w-8 text-[#4a5fdc] mx-auto" />
-                    </div>
+                <div className="flex justify-between items-start gap-8">
+                  <div className="flex-1">
+                    <h3 className="text-xl mb-3 group-hover:text-[#4a5fdc] transition-colors">
+                      {faq.question}
+                    </h3>
+                    <p className="text-gray-500 leading-relaxed">{faq.answer}</p>
                   </div>
-
-                  {/* Title */}
-                  <h3 
-                    className="text-xl text-[#2c3a8f]"
-                    style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
-                  >
-                    {info.title}
-                  </h3>
-
-                  {/* Line */}
                   <motion.div
-                    className="w-12 h-px bg-[#4a5fdc] mx-auto"
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + index * 0.1 }}
-                  />
-
-                  {/* Details */}
-                  <div className="space-y-1 text-sm text-gray-600">
-                    {info.details.map((detail, i) => (
-                      <p key={i}>{detail}</p>
-                    ))}
-                  </div>
+                    className="text-3xl text-gray-600 group-hover:text-white transition-colors"
+                    whileHover={{ rotate: 90 }}
+                  >
+                    →
+                  </motion.div>
                 </div>
-
-                {/* Corner accent */}
-                <div className="absolute -top-2 -left-2 w-4 h-4 border-l-2 border-t-2 border-[#4a5fdc] opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Section 3: Map Placeholder */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            {/* Deconstructed frame */}
-            <div className="absolute -inset-4 border-2 border-[#4a5fdc] opacity-20 transform -rotate-1" />
-            <div className="absolute -inset-4 border-2 border-[#4a5fdc] opacity-10 transform rotate-1" />
-            
-            {/* Map placeholder */}
-            <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <MapPin className="h-16 w-16 text-[#4a5fdc] mx-auto" />
-                  <div>
-                    <h3 
-                      className="text-2xl text-[#2c3a8f] mb-2"
-                      style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
-                    >
-                      Line Blooms Studio
-                    </h3>
-                    <p className="text-gray-600">123 Design Street, Gangnam-gu, Seoul</p>
-                  </div>
-                  
-                  {/* Decorative grid lines */}
-                  <div 
-                    className="absolute inset-0 opacity-[0.05]"
-                    style={{
-                      backgroundImage: `
-                        linear-gradient(to right, #4a5fdc 1px, transparent 1px),
-                        linear-gradient(to bottom, #4a5fdc 1px, transparent 1px)
-                      `,
-                      backgroundSize: '64px 64px'
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Corner lines */}
-              <div className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-[#4a5fdc] opacity-40" />
-              <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-[#4a5fdc] opacity-40" />
+      {/* Marquee CTA */}
+      <section className="relative py-20 overflow-hidden bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b]">
+        <motion.div
+          className="flex whitespace-nowrap"
+          animate={{ x: [0, -1000] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className="flex items-center gap-8 text-5xl sm:text-7xl lg:text-9xl text-white px-8">
+              <span>LET'S WORK TOGETHER</span>
+              <span className="text-black">×</span>
             </div>
-          </motion.div>
-
-          {/* Directions */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-            className="mt-12 text-center"
-          >
-            <p className="text-gray-600 mb-6">
-              We're located in the heart of Gangnam, just a 5-minute walk from Gangnam Station (Line 2)
-            </p>
-            <Button 
-              variant="outline"
-              className="border-2 border-[#4a5fdc] text-[#4a5fdc] hover:bg-[#4a5fdc] hover:text-white rounded-none px-8 py-6"
-            >
-              Get Directions
-            </Button>
-          </motion.div>
-        </div>
+          ))}
+        </motion.div>
       </section>
+
+      {/* Footer */}
+      <footer className="relative bg-black border-t border-white/10 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1800px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            {/* Brand */}
+            <div>
+              <div className="text-4xl mb-4 tracking-tighter">
+                <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>TODD</span>
+              </div>
+              <p className="text-gray-400 text-sm mb-6">
+                규칙을 깨는 선<br/>
+                실험적이고 대담한 디자인 스튜디오
+              </p>
+              <div className="flex gap-4">
+                <a 
+                  href="#" 
+                  className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#4a5fdc] hover:to-[#ff6b6b] hover:border-transparent transition-all group"
+                >
+                  <Instagram className="w-4 h-4 text-white" />
+                </a>
+                <a 
+                  href="https://blog.naver.com/toddstudio" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#4a5fdc] hover:to-[#ff6b6b] hover:border-transparent transition-all text-xs"
+                >
+                  BL
+                </a>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-sm tracking-widest mb-6 text-gray-500">QUICK LINKS</h4>
+              <ul className="space-y-3 text-gray-400">
+                {['Work', 'Insights', 'About', 'Contact'].map((link) => (
+                  <li key={link}>
+                    <a href="#" className="hover:text-white transition-colors hover:pl-2 inline-block">
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="text-sm tracking-widest mb-6 text-gray-500">CONTACT</h4>
+              <p className="text-gray-400 text-sm mb-2">wognsben19977@naver.com</p>
+              <p className="text-gray-400 text-sm">Seoul, South Korea</p>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="text-gray-600 text-xs">
+              © 2025 TODD Studio. All rights reserved.
+            </div>
+            <div className="flex gap-6 text-gray-600 text-xs">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -15,10 +15,12 @@ import scribbleBird from 'figma:asset/64a3719b6f9b12ce2df23abf15598d419007f1ff.p
 import cowFlesh from 'figma:asset/651d1c80b74e5b16b23f8a335f066acd6fb36bd5.png';
 import cowBones from 'figma:asset/0e8d60a8da62a01d5f6f2296cfaa6e2449e276e0.png';
 import scribbleBlue from 'figma:asset/d6c974dcd4689ee0b01faa57207ef6bcfe06d967.png';
+import toddLogo from 'figma:asset/347c327e93f757b38013444742883c32c7d05493.png';
 
 export function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredImage, setHoveredImage] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
@@ -28,6 +30,58 @@ export function Home() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Portfolio data (expandable)
+  const portfolioProjects = [
+    {
+      id: 1,
+      title: "Project Alpha",
+      client: "Tech Startup",
+      year: "2024",
+      category: "UI/UX Design",
+      description: "A bold redesign of a fintech platform that challenges conventional banking interfaces.",
+      color: "#4a5fdc",
+      image: scribbleBouquet,
+    },
+    {
+      id: 2,
+      title: "Project Beta",
+      client: "Creative Agency",
+      year: "2024",
+      category: "Frontend Development",
+      description: "Experimental web experience with 3D interactions and brutalist aesthetics.",
+      color: "#ff6b6b",
+      image: scribblePortrait,
+    },
+    {
+      id: 3,
+      title: "Project Gamma",
+      client: "Fashion Brand",
+      year: "2025",
+      category: "Web Design",
+      description: "Raw, unfiltered digital presence for an avant-garde fashion collective.",
+      color: "#4ecdc4",
+      image: scribbleArt,
+    },
+    {
+      id: 4,
+      title: "Project Delta",
+      client: "Music Festival",
+      year: "2025",
+      category: "Interactive Design",
+      description: "Chaotic yet harmonious festival website with generative art elements.",
+      color: "#ffe66d",
+      image: scribbleBlue,
+    },
+  ];
+
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % portfolioProjects.length);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + portfolioProjects.length) % portfolioProjects.length);
+  };
 
   const scribbleImages = [
     { src: scribbleGirls, id: "001", color: "#4a5fdc" },
@@ -54,6 +108,33 @@ export function Home() {
         }}
         transition={{ type: "spring", stiffness: 500, damping: 28 }}
       />
+
+      {/* BRAND LOGO - Absolute positioned at top level */}
+      <motion.div
+        className="absolute top-[50vh] left-[58%] -translate-x-1/2 -translate-y-1/2 z-[100]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ 
+          delay: 1.8, 
+          duration: 1.2,
+        }}
+      >
+        {/* Logo Container */}
+        <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center">
+          <img
+            src={toddLogo}
+            alt="TODD Logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        {/* Text Under Logo */}
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
+          <div className="text-white text-xs tracking-[0.3em] opacity-70">
+            EST. 2025
+          </div>
+        </div>
+      </motion.div>
 
       {/* TORN PAPER DIAGONAL LINE - Extended across Hero + Archive */}
       <div className="absolute top-0 left-0 w-full pointer-events-none z-[15]" style={{ height: 'calc(100vh + 200vh)' }}>
@@ -272,24 +353,14 @@ export function Home() {
             </motion.div>
           </motion.div>
 
-          {/* TOP LEFT - TODD Tag */}
-          <motion.div
-            className="absolute top-8 left-8 bg-black text-white px-4 py-2 text-xs tracking-widest z-30"
-          >
-            TODD
-          </motion.div>
-
           {/* LEFT - Main Title */}
           <motion.div
             className="absolute top-[15%] left-8 max-w-lg z-30"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1 }}
           >
             <h1 className="text-5xl sm:text-6xl lg:text-7xl leading-none text-white mb-8" style={{
               textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
             }}>
-              Breaking the<br/>Rules of Lines
+              Torn, Raw, Alive
             </h1>
           </motion.div>
 
@@ -303,9 +374,10 @@ export function Home() {
               textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
             }}
           >
-            Where bold design meets experimental boundaries.<br/>
-            TODD redefines floral aesthetics through daring contrasts<br/>
-            and unconventional narratives.
+            We tear down conventions and rebuild<br/>
+            digital experiences from scratch—<br/>
+            raw, experimental, alive.<br/><br/>
+            <span className="text-white/70">UI/UX Design × Frontend Development</span>
           </motion.div>
 
           {/* BOTTOM RIGHT - Small Icon/Badge */}
@@ -320,6 +392,7 @@ export function Home() {
           </motion.div>
 
         </div>
+
       </section>
 
       {/* Scribble Collection - Chaotic Grid */}
@@ -454,181 +527,167 @@ export function Home() {
         </div>
       </section>
 
-      {/* Photographic Series - Experimental Layout */}
-      <section className="relative min-h-screen bg-black text-white py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1800px] mx-auto">
-          
+      {/* Book Portfolio Section - Page Flip Interaction */}
+      <section className="relative min-h-screen bg-black text-white py-20 px-4 sm:px-6 lg:px-8 z-10">
+        <div className="max-w-[1400px] mx-auto">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-20"
+            className="mb-16 text-center"
           >
-            <div className="flex items-end justify-between mb-8">
-              <div>
-                <div className="text-sm tracking-widest text-gray-600 mb-2">002 — PHOTOGRAPHY</div>
-                <h2 className="text-[15vw] sm:text-[12vw] leading-none tracking-tight">
-                  <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>LIFE</span>
-                </h2>
-              </div>
-              <div className="hidden lg:block text-right max-w-xs">
-                <p className="text-sm text-gray-400">
-                  순간을 포착하는<br/>
-                  우리만의 시선
-                </p>
-              </div>
-            </div>
+            <div className="text-sm tracking-[0.3em] text-gray-500 mb-4">— OUR WORKS —</div>
+            <h2 className="text-6xl sm:text-8xl lg:text-9xl leading-none">
+              <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>Portfolio</span>
+            </h2>
           </motion.div>
 
-          {/* Experimental Grid Layout */}
-          <div className="grid grid-cols-12 gap-4 auto-rows-[200px]">
-            
-            {/* Large Hero Image */}
+          {/* Book Container */}
+          <div className="relative perspective-[2000px]">
+            {/* Current Page Display */}
             <motion.div
-              className="col-span-12 lg:col-span-7 row-span-3 relative overflow-hidden bg-gray-900 group cursor-pointer"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              key={currentPage}
+              className="relative w-full max-w-5xl mx-auto"
+              initial={{ rotateY: -90, opacity: 0 }}
+              animate={{ rotateY: 0, opacity: 1 }}
+              exit={{ rotateY: 90, opacity: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                transformStyle: 'preserve-3d',
+              }}
             >
-              <img
-                src={drawnImage}
-                alt="Featured"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              <div className="absolute bottom-8 left-8 text-white">
-                <div className="text-7xl sm:text-9xl leading-none mb-4">01</div>
-                <div className="text-2xl">Drawn by Life</div>
-                <div className="text-sm opacity-70 mt-2">Featured Work</div>
+              {/* Page Content */}
+              <div className="relative bg-white text-black p-8 sm:p-12 lg:p-16 shadow-2xl">
+                {/* Page Number - Top Left */}
+                <div className="absolute top-8 left-8 text-6xl sm:text-8xl opacity-10 leading-none">
+                  {currentPage + 1}
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  {/* Left: Image */}
+                  <motion.div
+                    className="relative aspect-[3/4] bg-gray-100 overflow-hidden"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <img
+                      src={portfolioProjects[currentPage].image}
+                      alt={portfolioProjects[currentPage].title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Color overlay */}
+                    <div 
+                      className="absolute inset-0 mix-blend-multiply opacity-20"
+                      style={{ backgroundColor: portfolioProjects[currentPage].color }}
+                    />
+                  </motion.div>
+
+                  {/* Right: Info */}
+                  <div className="space-y-6">
+                    {/* Category Badge */}
+                    <div 
+                      className="inline-block px-4 py-2 text-white text-xs tracking-widest"
+                      style={{ backgroundColor: portfolioProjects[currentPage].color }}
+                    >
+                      {portfolioProjects[currentPage].category}
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-4xl sm:text-5xl lg:text-6xl leading-none">
+                      {portfolioProjects[currentPage].title}
+                    </h3>
+
+                    {/* Client & Year */}
+                    <div className="flex gap-8 text-sm text-gray-600">
+                      <div>
+                        <div className="uppercase tracking-wider mb-1">Client</div>
+                        <div className="text-black">{portfolioProjects[currentPage].client}</div>
+                      </div>
+                      <div>
+                        <div className="uppercase tracking-wider mb-1">Year</div>
+                        <div className="text-black">{portfolioProjects[currentPage].year}</div>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-lg text-gray-700 leading-relaxed">
+                      {portfolioProjects[currentPage].description}
+                    </p>
+
+                    {/* View Project Button */}
+                    <motion.button
+                      className="mt-4 px-8 py-3 bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      VIEW PROJECT →
+                    </motion.button>
+                  </div>
+                </div>
+
+                {/* Page Tear Effect - Bottom */}
+                <div className="absolute bottom-0 left-0 right-0 h-8 bg-black opacity-5" 
+                  style={{
+                    clipPath: 'polygon(0 0, 2% 100%, 5% 0, 7% 100%, 10% 0, 12% 100%, 15% 0, 18% 100%, 20% 0, 23% 100%, 25% 0, 28% 100%, 30% 0, 32% 100%, 35% 0, 38% 100%, 40% 0, 42% 100%, 45% 0, 48% 100%, 50% 0, 52% 100%, 55% 0, 58% 100%, 60% 0, 62% 100%, 65% 0, 68% 100%, 70% 0, 72% 100%, 75% 0, 78% 100%, 80% 0, 82% 100%, 85% 0, 88% 100%, 90% 0, 92% 100%, 95% 0, 98% 100%, 100% 0)'
+                  }}
+                />
               </div>
-              <div className="absolute top-8 right-8">
-                <div className="w-16 h-16 border-4 border-white rounded-full flex items-center justify-center text-white text-xl">
+            </motion.div>
+
+            {/* Navigation Arrows */}
+            <div className="flex justify-between items-center mt-12 max-w-5xl mx-auto">
+              {/* Previous Button */}
+              <motion.button
+                onClick={prevPage}
+                className="group flex items-center gap-3 text-white hover:text-[#4a5fdc] transition-colors"
+                whileHover={{ x: -5 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="w-12 h-12 border-2 border-white group-hover:border-[#4a5fdc] flex items-center justify-center text-2xl transition-colors">
+                  ←
+                </div>
+                <span className="text-sm tracking-wider">PREV</span>
+              </motion.button>
+
+              {/* Page Indicator */}
+              <div className="flex gap-3">
+                {portfolioProjects.map((_, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className="relative"
+                    whileHover={{ scale: 1.2 }}
+                  >
+                    <div 
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentPage 
+                          ? 'bg-white w-8' 
+                          : 'bg-gray-600 hover:bg-gray-400'
+                      }`}
+                    />
+                  </motion.button>
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <motion.button
+                onClick={nextPage}
+                className="group flex items-center gap-3 text-white hover:text-[#4a5fdc] transition-colors"
+                whileHover={{ x: 5 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-sm tracking-wider">NEXT</span>
+                <div className="w-12 h-12 border-2 border-white group-hover:border-[#4a5fdc] flex items-center justify-center text-2xl transition-colors">
                   →
                 </div>
-              </div>
-            </motion.div>
+              </motion.button>
+            </div>
 
-            {/* Color Block Text */}
-            <motion.div
-              className="col-span-12 lg:col-span-5 row-span-2 bg-[#4a5fdc] p-8 flex flex-col justify-center relative overflow-hidden"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="relative z-10">
-                <div className="text-white/30 text-8xl sm:text-9xl leading-none mb-4">*</div>
-                <h3 className="text-4xl sm:text-5xl text-white mb-6 leading-tight">
-                  Every moment<br/>tells a story
-                </h3>
-                <p className="text-white/80 text-lg">
-                  우리는 순간을 기록하고<br/>
-                  감정을 담아냅니다
-                </p>
-              </div>
-              <div className="absolute -bottom-10 -right-10 text-white/10 text-[20vw] leading-none">
-                02
-              </div>
-            </motion.div>
-
-            {/* Small Image 1 - Scribble */}
-            <motion.div
-              className="col-span-6 lg:col-span-5 row-span-2 relative overflow-hidden bg-white group cursor-pointer"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1693901103311-18a38b30a99e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXJrJTIwbWluaW1hbCUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3NjM5OTQ2NTh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Dark Architecture"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute top-4 left-4 bg-black text-white px-4 py-2 text-sm">
-                02
-              </div>
-            </motion.div>
-
-            {/* Small Image 2 - Scribble */}
-            <motion.div
-              className="col-span-6 lg:col-span-4 row-span-2 relative overflow-hidden bg-white group cursor-pointer"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1756807090966-d8eeb7630c42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3VnaCUyMHVyYmFuJTIwc3RyZWV0JTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzYzOTk0NjU4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Urban Street"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute bottom-4 left-4 bg-black text-white px-4 py-2 text-sm">
-                03
-              </div>
-            </motion.div>
-
-            {/* Text Block */}
-            <motion.div
-              className="col-span-12 lg:col-span-3 row-span-2 bg-white text-black p-6 flex flex-col justify-between"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <div>
-                <div className="text-6xl mb-4">↗</div>
-                <div className="text-sm text-gray-600 mb-2">VIEW ALL</div>
-                <div className="text-2xl leading-tight">
-                  Explore the<br/>full collection
-                </div>
-              </div>
-              <div className="text-gray-400 text-xs">
-                2024—2025<br/>
-                TODD GALLERY
-              </div>
-            </motion.div>
-
-            {/* Wide Image - Scribble */}
-            <motion.div
-              className="col-span-12 lg:col-span-8 row-span-2 relative overflow-hidden bg-white group cursor-pointer"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1607429126980-5e59cecb6a12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGRhcmslMjB0ZXh0dXJlfGVufDF8fHx8MTc2MzkyNDI4OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Abstract Texture"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-              <div className="absolute top-8 right-8 bg-white text-black w-12 h-12 rounded-full flex items-center justify-center text-xl opacity-0 group-hover:opacity-100 transition-opacity">
-                +
-              </div>
-            </motion.div>
-
-            {/* Small Square - Scribble Bird */}
-            <motion.div
-              className="col-span-6 lg:col-span-4 row-span-2 relative overflow-hidden bg-white group cursor-pointer"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <img
-                src={scribbleBird}
-                alt="Scribble Bird"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute top-4 left-4 bg-black text-white px-4 py-2 text-sm">
-                04
-              </div>
-            </motion.div>
-
+            {/* Page Counter */}
+            <div className="text-center mt-8 text-gray-600 text-sm tracking-wider">
+              {String(currentPage + 1).padStart(2, '0')} / {String(portfolioProjects.length).padStart(2, '0')}
+            </div>
           </div>
         </div>
       </section>

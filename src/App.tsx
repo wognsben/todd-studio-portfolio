@@ -5,6 +5,7 @@ import { Shop } from './components/Shop';
 import { Blog } from './components/Blog';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
+import toddLogo from 'figma:asset/347c327e93f757b38013444742883c32c7d05493.png';
 
 type PageType = 'home' | 'shop' | 'blog' | 'about' | 'contact';
 
@@ -39,28 +40,30 @@ export default function App() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              <div className="relative">
-                {/* Main Logo */}
-                <h1 className="text-2xl tracking-tighter text-white relative z-10">
-                  TODD
-                </h1>
-                {/* Glitch Effect on Hover */}
-                <h1 
-                  className="text-2xl tracking-tighter text-[#4a5fdc] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{
-                    transform: 'translate(2px, -2px)',
-                  }}
-                >
-                  TODD
-                </h1>
-                <h1 
-                  className="text-2xl tracking-tighter text-[#ff6b6b] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{
-                    transform: 'translate(-2px, 2px)',
-                  }}
-                >
-                  TODD
-                </h1>
+              <div className="relative flex items-center gap-2">
+                {/* Star Symbol with Est. */}
+                <div className="flex flex-col items-center">
+                  <span className="text-xl text-white">✹</span>
+                  <span className="text-[8px] text-gray-500 tracking-wider mt-0.5">EST. 2025</span>
+                </div>
+                
+                <div className="relative">
+                  <h1 className="text-2xl tracking-tighter text-white relative z-10">
+                    TODD
+                  </h1>
+                  <h1 
+                    className="text-2xl tracking-tighter text-[#4a5fdc] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ transform: 'translate(2px, -2px)' }}
+                  >
+                    TODD
+                  </h1>
+                  <h1 
+                    className="text-2xl tracking-tighter text-[#ff6b6b] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ transform: 'translate(-2px, 2px)' }}
+                  >
+                    TODD
+                  </h1>
+                </div>
               </div>
               
               {/* Underline Animation */}

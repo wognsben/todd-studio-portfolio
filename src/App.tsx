@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Home } from './components/Home';
 import { Work } from './components/Work';
@@ -12,6 +12,11 @@ type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const navItems = [
     { id: 'home' as PageType, label: 'Home', number: '01' },

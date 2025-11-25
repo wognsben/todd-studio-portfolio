@@ -30,34 +30,38 @@ export function About() {
     },
   ];
 
-  const team = [
-    {
-      name: "김도경",
-      role: "Creative Director",
-      description: "실험적 디자인과 브랜드 전략 전문",
-    },
-    {
-      name: "이서연",
-      role: "Lead Designer",
-      description: "UI/UX 디자인과 인터랙션 디자인",
-    },
-    {
-      name: "박준혁",
-      role: "Frontend Developer",
-      description: "React & Motion 개발 전문",
-    },
-    {
-      name: "최하은",
-      role: "Brand Strategist",
-      description: "브랜드 아이덴티티와 마케팅",
-    },
-  ];
-
   const timeline = [
     { year: "2025", event: "TODD Studio 설립" },
     { year: "2025 Q2", event: "첫 클라이언트 프로젝트 완료" },
     { year: "2025 Q3", event: "디자인 어워드 수상" },
     { year: "2025 Q4", event: "팀 확장 및 오피스 이전" },
+  ];
+
+  const philosophy = [
+    {
+      number: '01',
+      title: '개성 100%',
+      description: '모든 프로젝트는 독특하고 차별화된 아이덴티티를 가져야 합니다.',
+      color: '#4a5fdc',
+    },
+    {
+      number: '02',
+      title: '독창성 우선',
+      description: '트렌드를 따르지 않고, 새로운 트렌드를 만들어갑니다.',
+      color: '#ff6b6b',
+    },
+    {
+      number: '03',
+      title: '실험적 접근',
+      description: '규칙을 깨고 새로운 표현 방법을 끊임없이 탐구합니다.',
+      color: '#4ecdc4',
+    },
+    {
+      number: '04',
+      title: '기술과 예술의 융합',
+      description: '최신 기술을 활용하여 예술적 비전을 완벽하게 구현합니다.',
+      color: '#ffe66d',
+    },
   ];
 
   return (
@@ -228,60 +232,62 @@ export function About() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <div className="text-sm tracking-[0.4em] text-gray-500 mb-4">— THE TEAM —</div>
+            <div className="text-sm tracking-[0.4em] text-gray-500 mb-4">— TODD PHILOSOPHY —</div>
             <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-8">
               <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>
-                Meet the Team
+                TODD를 만나보세요
               </span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              열정과 전문성을 가진 크리에이터들이<br />
-              함께 모여 독특한 경험을 만들어갑니다.
+              차별화된 접근으로 독특한 디지털 경험을 만드는<br />
+              TODD Studio의 디자인 철학입니다.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
+          <div className="space-y-1">
+            {philosophy.map((item, index) => (
               <motion.div
-                key={index}
-                className="group cursor-pointer"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                key={item.number}
+                className="group cursor-pointer border-t border-white/10 py-8 hover:bg-white/5 transition-all px-6"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
+                transition={{ delay: index * 0.08 }}
+                whileHover={{ x: 10 }}
               >
-                {/* Avatar Placeholder */}
-                <motion.div
-                  className="relative aspect-square mb-4 overflow-hidden"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#4a5fdc] to-[#ff6b6b]" />
-                  <div className="absolute inset-0 flex items-center justify-center text-white text-6xl">
-                    {member.name.charAt(0)}
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                  {/* Number & Content */}
+                  <div className="flex items-center gap-6 md:gap-8 flex-1">
+                    <div
+                      className="text-5xl md:text-6xl opacity-40 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                      style={{ color: item.color }}
+                    >
+                      {item.number}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl md:text-3xl mb-2 group-hover:text-transparent group-hover:[-webkit-text-stroke:1px_white] transition-all">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm md:text-base">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Hover Overlay */}
+                  {/* Arrow */}
                   <motion.div
-                    className="absolute inset-0 bg-black/80 flex items-center justify-center"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
+                    className="text-4xl md:text-5xl text-white/20 group-hover:text-white transition-colors flex-shrink-0"
+                    whileHover={{ x: 10, rotate: -45 }}
                   >
-                    <div className="text-white text-sm text-center px-4">
-                      {member.description}
-                    </div>
+                    →
                   </motion.div>
-                </motion.div>
-
-                <div className="text-center">
-                  <h3 className="text-xl mb-2 group-hover:text-[#4a5fdc] transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm text-gray-500 tracking-wider">{member.role}</p>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* Bottom Border */}
+          <div className="border-t border-white/10 mt-1" />
         </div>
       </section>
 

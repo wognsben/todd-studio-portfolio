@@ -6,13 +6,6 @@ import scribblePortrait from 'figma:asset/43460bda5851173b4cdca07ffd882dfb8b33bd
 
 export function Work() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [filter, setFilter] = useState<string>('all');
-
-  const categories = ['all', 'UI/UX', 'Web', 'Branding', 'E-commerce'];
-
-  const filteredProjects = filter === 'all' 
-    ? portfolioProjects 
-    : portfolioProjects.filter(project => project.tags.includes(filter));
 
   const selectedProjectData = portfolioProjects.find(p => p.id === selectedProject);
 
@@ -69,52 +62,11 @@ export function Work() {
         </div>
       </section>
 
-      {/* Filter Section */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 border-b border-white/10">
-        <div className="max-w-[1400px] mx-auto">
-          <motion.div
-            className="flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            {categories.map((category, index) => (
-              <motion.button
-                key={category}
-                onClick={() => setFilter(category)}
-                className={`px-6 py-3 border-2 transition-all ${
-                  filter === category
-                    ? 'bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] border-transparent text-white'
-                    : 'border-white/20 text-gray-400 hover:border-white/50 hover:text-white'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                {category.toUpperCase()}
-              </motion.button>
-            ))}
-          </motion.div>
-
-          {/* Project Count */}
-          <motion.div
-            className="text-center mt-8 text-gray-500 text-sm tracking-wider"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            {filteredProjects.length} PROJECT{filteredProjects.length !== 1 ? 'S' : ''}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Projects Grid - Each project shows all 3 images */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1400px] mx-auto">
           <div className="space-y-32">
-            {filteredProjects.map((project, index) => (
+            {portfolioProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 className="group"

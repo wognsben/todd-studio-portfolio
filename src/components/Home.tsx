@@ -84,13 +84,8 @@ export function Home() {
   };
 
   const scribbleImages = [
-    { src: scribbleGirls, id: "001", color: "#4a5fdc" },
     { src: scribbleBouquet, id: "002", color: "#ff6b6b" },
-    { src: scribbleDog, id: "003", color: "#ffe66d" },
     { src: scribblePortrait, id: "004", color: "#4ecdc4" },
-    { src: scribbleFlowersClouds, id: "005", color: "#ffd3b6" },
-    { src: scribbleDress, id: "006", color: "#a8e6cf" },
-    { src: scribblePeople, id: "007", color: "#ff8b94" },
     { src: scribbleArt, id: "008", color: "#c7ceea" },
     { src: scribbleBlue, id: "009", color: "#5b6fdc" },
   ];
@@ -137,11 +132,11 @@ export function Home() {
       </motion.div>
 
       {/* TORN PAPER DIAGONAL LINE - Extended across Hero + Archive */}
-      <div className="absolute top-0 left-0 w-full pointer-events-none z-[15]" style={{ height: 'calc(100vh + 200vh)' }}>
+      <div className="absolute top-0 left-0 w-full pointer-events-none z-[15]" style={{ height: 'calc(100vh + 50vh)' }}>
         <svg 
           className="absolute inset-0 w-full h-full"
           preserveAspectRatio="none"
-          viewBox="0 0 100 200"
+          viewBox="0 0 100 150"
         >
           <defs>
             {/* Paper texture filter */}
@@ -157,7 +152,7 @@ export function Home() {
             </filter>
           </defs>
           
-          {/* Main torn paper path - extended from hero to archive */}
+          {/* Main torn paper path - extended from hero to archive header */}
           <path
             d={`
               M 65 0
@@ -176,49 +171,39 @@ export function Home() {
               Q 65.3 67, 65 70
               Q 64.5 73, 64.8 76
               Q 64.2 79, 64.5 82
-              Q 64 85, 63.8 88
-              Q 63.5 91, 63.2 94
-              Q 63 97, 62.5 100
-              Q 61 105, 59 110
-              Q 57 115, 55 120
-              Q 53 125, 50 127
-              Q 42 130, 34 133
-              Q 26 136, 20 140
-              Q 18 145, 17.5 150
-              Q 17 155, 16.5 160
-              Q 16 165, 15.8 170
-              Q 15.5 175, 15.2 180
-              Q 15 185, 14.8 190
-              Q 14.5 195, 14.2 200
-              L 12 200
-              Q 12.3 195, 12.5 190
-              Q 12.8 185, 13 180
-              Q 13.2 175, 13.5 170
-              Q 13.8 165, 14 160
-              Q 14.5 155, 15 150
-              Q 16 145, 18 140
-              Q 24 136, 32 133
-              Q 40 130, 44 127
-              Q 47 125, 49 120
-              Q 51 115, 53 110
-              Q 55 105, 57 100
-              Q 45.5 97, 45.8 94
-              Q 46 91, 46.5 88
-              Q 46.8 85, 47 82
-              Q 47.3 79, 47.5 76
-              Q 47.8 73, 48 70
-              Q 48.5 67, 48.7 64
-              Q 49 61, 49.5 58
-              Q 49.8 55, 50.2 52
-              Q 50.5 49, 51 46
-              Q 51.5 43, 52 40
-              Q 52.5 37, 53 34
-              Q 53.5 31, 54 28
-              Q 54.8 25, 55.5 22
-              Q 56 19, 56.8 16
-              Q 57.5 13, 58.2 10
-              Q 59 8, 60 6
-              Q 61 3, 62 0
+              Q 64 85, 63.5 88
+              Q 63 91, 62.5 94
+              Q 62 97, 61 100
+              Q 59 105, 56 110
+              Q 52 115, 47 120
+              Q 41 125, 34 130
+              Q 27 135, 20 140
+              Q 15 143, 11 146
+              Q 9 148, 7 150
+              L 5 150
+              Q 7 148, 9 146
+              Q 13 143, 18 140
+              Q 25 135, 32 130
+              Q 39 125, 45 120
+              Q 50 115, 54 110
+              Q 57 105, 59 100
+              Q 46 97, 46.3 94
+              Q 46.5 91, 47 88
+              Q 47.5 85, 48 82
+              Q 48.3 79, 48.7 76
+              Q 49 73, 49.5 70
+              Q 49.8 67, 50.2 64
+              Q 50.5 61, 51 58
+              Q 51.3 55, 51.7 52
+              Q 52 49, 52.5 46
+              Q 52.8 43, 53.3 40
+              Q 53.7 37, 54.2 34
+              Q 54.7 31, 55.3 28
+              Q 55.8 25, 56.5 22
+              Q 57 19, 57.8 16
+              Q 58.5 13, 59.2 10
+              Q 60 8, 60.8 6
+              Q 61.5 3, 62 0
               Z
             `}
             fill="white"
@@ -243,49 +228,39 @@ export function Home() {
               Q 65.3 67, 65 70
               Q 64.5 73, 64.8 76
               Q 64.2 79, 64.5 82
-              Q 64 85, 63.8 88
-              Q 63.5 91, 63.2 94
-              Q 63 97, 62.5 100
-              Q 61 105, 59 110
-              Q 57 115, 55 120
-              Q 53 125, 50 127
-              Q 42 130, 34 133
-              Q 26 136, 20 140
-              Q 18 145, 17.5 150
-              Q 17 155, 16.5 160
-              Q 16 165, 15.8 170
-              Q 15.5 175, 15.2 180
-              Q 15 185, 14.8 190
-              Q 14.5 195, 14.2 200
-              L 13 200
-              Q 13.3 195, 13.5 190
-              Q 13.7 185, 14 180
-              Q 14.2 175, 14.5 170
-              Q 14.8 165, 15 160
-              Q 15.5 155, 16 150
-              Q 17 145, 19 140
-              Q 25 136, 33 133
-              Q 41 130, 45 127
-              Q 48 125, 50 120
-              Q 52 115, 54 110
-              Q 56 105, 58 100
-              Q 62.5 97, 62.8 94
-              Q 63 91, 63.3 88
-              Q 63.5 85, 63.8 82
-              Q 64 79, 64.3 76
-              Q 64.5 73, 64.8 70
-              Q 65 67, 65.3 64
-              Q 65.5 61, 65.8 58
-              Q 66 55, 66.2 52
-              Q 66.3 49, 66.5 46
-              Q 66.7 43, 67 40
-              Q 67.2 37, 67.5 34
-              Q 67.8 31, 68 28
-              Q 68.3 25, 68.5 22
-              Q 68.8 19, 69 16
-              Q 69.3 13, 69.5 10
-              Q 70 8, 70.5 6
-              Q 71 3, 71.5 0
+              Q 64 85, 63.5 88
+              Q 63 91, 62.5 94
+              Q 62 97, 61 100
+              Q 59.5 105, 57 110
+              Q 54 115, 49 120
+              Q 43 125, 36 130
+              Q 29 135, 22 140
+              Q 17 143, 13 146
+              Q 11 148, 9 150
+              L 11 150
+              Q 13 148, 15 146
+              Q 19 143, 24 140
+              Q 31 135, 38 130
+              Q 45 125, 51 120
+              Q 56 115, 59 110
+              Q 61.5 105, 63 100
+              Q 63.5 97, 64 94
+              Q 64.3 91, 64.7 88
+              Q 65 85, 65.3 82
+              Q 65.5 79, 65.8 76
+              Q 66 73, 66.3 70
+              Q 66.5 67, 66.8 64
+              Q 67 61, 67.3 58
+              Q 67.5 55, 67.8 52
+              Q 68 49, 68.3 46
+              Q 68.5 43, 68.8 40
+              Q 69 37, 69.3 34
+              Q 69.5 31, 69.8 28
+              Q 70 25, 70.3 22
+              Q 70.5 19, 70.8 16
+              Q 71 13, 71.3 10
+              Q 71.5 8, 71.8 6
+              Q 72 3, 72.5 0
               Z
             `}
             fill="rgba(0,0,0,0.08)"
@@ -297,6 +272,60 @@ export function Home() {
       {/* Hero - Diagonal Split: Inspired by The Vulture and the Cow */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black z-10 pt-20">
         
+        {/* GRID OVERLAY - Subtle Tech Feel */}
+        <div 
+          className="absolute inset-0 pointer-events-none z-[5]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '24px 24px',
+          }}
+        />
+
+        {/* FILM GRAIN TEXTURE - Rough but Premium */}
+        <div 
+          className="absolute inset-0 pointer-events-none z-[6] opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+          }}
+        />
+
+        {/* LOCATION INFO - Top Right */}
+        <motion.div
+          className="absolute top-28 right-8 text-white/50 text-[10px] tracking-[0.4em] z-30"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        >
+          SEOUL, KR / EST. 2025
+        </motion.div>
+
+        {/* VERTICAL TEXT - Left Side */}
+        <motion.div
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-30"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          style={{ writingMode: 'vertical-rl' }}
+        >
+          <span className="text-white/40 text-[10px] tracking-[0.4em]">
+            DESIGN × CODE
+          </span>
+        </motion.div>
+
+        {/* PAGE INDEX - Bottom Left Corner */}
+        <motion.div
+          className="absolute top-28 left-8 text-white/30 text-[9px] tracking-[0.3em] z-30"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+        >
+          001 / HOMEPAGE
+        </motion.div>
+
         {/* Diagonal Split Container */}
         <div className="relative w-full h-screen">
           
@@ -304,15 +333,15 @@ export function Home() {
           <motion.div 
             className="absolute top-0 left-0 w-full h-full bg-black"
             style={{
-              clipPath: 'polygon(0 0, 65% 0, 45% 100%, 0 100%)',
+              clipPath: 'polygon(0 0, 65% 0, 65% 100%, 0 100%)',
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            {/* Skeleton Cow - Moved Right & Same Height as Flesh Cow */}
+            {/* Skeleton Cow */}
             <motion.div
-              className="absolute top-1/2 left-[38%] -translate-y-1/2 w-[45%] max-w-xl z-10"
+              className="absolute top-1/2 left-[38%] -translate-y-1/2 w-[45%] max-w-xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -329,15 +358,15 @@ export function Home() {
           <motion.div 
             className="absolute top-0 left-0 w-full h-full bg-black"
             style={{
-              clipPath: 'polygon(65% 0, 100% 0, 100% 100%, 45% 100%)',
+              clipPath: 'polygon(65% 0, 100% 0, 100% 100%, 65% 100%)',
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            {/* Purple Cow - Same Height as Skeleton Cow */}
+            {/* Purple Cow */}
             <motion.div
-              className="absolute top-1/2 right-[20%] -translate-y-1/2 w-[45%] max-w-xl z-10"
+              className="absolute top-1/2 right-[20%] -translate-y-1/2 w-[45%] max-w-xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -374,10 +403,8 @@ export function Home() {
               textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
             }}
           >
-            We tear down conventions and rebuild<br/>
-            digital experiences from scratch—<br/>
-            raw, experimental, alive.<br/><br/>
-            <span className="text-white/70">UI/UX Design × Frontend Development</span>
+            Break. Build. Repeat.<br/>
+            Digital experiences with attitude.
           </motion.div>
 
           {/* BOTTOM RIGHT - Small Icon/Badge */}
@@ -420,15 +447,10 @@ export function Home() {
           <div className="relative">
             {scribbleImages.map((image, index) => {
               const positions = [
-                { top: "0%", left: "5%", width: "35%", rotate: -3 },      // 001
-                { top: "10%", right: "8%", width: "28%", rotate: 5 },     // 002
-                { top: "30%", left: "45%", width: "32%", rotate: 2 },     // 003 (원래 004 위치)
-                { top: "45%", left: "15%", width: "25%", rotate: -8 },    // 004 (원래 003 위치)
-                { top: "55%", left: "42%", width: "24%", rotate: 6 },     // 005 (원래 008 위)
-                { top: "65%", right: "15%", width: "30%", rotate: -5 },   // 006 (원래 005 위치)
-                { top: "80%", left: "8%", width: "27%", rotate: 7 },      // 007 (원래 006 위치)
-                { top: "85%", right: "35%", width: "22%", rotate: -4 },   // 008 (원래 007 위치)
-                { top: "90%", left: "20%", width: "20%", rotate: 3 },     // 009 (새로운 위치)
+                { top: "10%", left: "8%", width: "40%", rotate: -4 },      // 002
+                { top: "15%", right: "10%", width: "35%", rotate: 3 },     // 004
+                { top: "55%", left: "15%", width: "38%", rotate: 5 },      // 008
+                { top: "60%", right: "12%", width: "32%", rotate: -3 },    // 009
               ];
 
               const position = positions[index];
@@ -522,7 +544,7 @@ export function Home() {
             })}
 
             {/* Spacer for absolute positioned items */}
-            <div className="h-[200vh]" />
+            <div className="h-[120vh]" />
           </div>
         </div>
       </section>
@@ -738,7 +760,7 @@ export function Home() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-12 left-12 text-white">
-              <div className="text-6xl mb-2">✹</div>
+              <div className="text-6xl mb-2"></div>
               <div className="text-2xl">TODD</div>
               <div className="text-sm opacity-70">Est. 2025</div>
             </div>

@@ -1,4 +1,10 @@
 // Portfolio data shared across Home and Work pages
+import rbMain from "figma:asset/6a7575571474ebf4591c967ab1e6418384ba06b1.png";
+import rbImage2 from "figma:asset/d412fb27c69f69d36d0cbffd88b059281e8b83ed.png";
+import rbImage3 from "figma:asset/bad6b33e2ce93baf945c4c3d01c23b4902a3a132.png";
+import bwMain from "figma:asset/66cd8d456ff9e532909f5b50b5a4f7de14549b29.png";
+import mistMain from "figma:asset/710982991a83cb09d6719798395dd2feffd1943a.png";
+import yellowMain from "figma:asset/983dd6b4ec0dd780a2a30fabd5a275437c3f3689.png";
 
 export interface PortfolioProject {
   id: number;
@@ -27,9 +33,9 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#4a5fdc",
     tags: ["UI/UX", "Web", "Fashion"],
     images: {
-      main: "https://images.unsplash.com/photo-1639244151653-7807947de5a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwbWFnYXppbmUlMjBlZGl0b3JpYWx8ZW58MXx8fHwxNzYzOTgxNjYwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      image2: "https://images.unsplash.com/photo-1532455900982-24be47fa89de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBmYXNoaW9uJTIwbGF5b3V0fGVufDF8fHx8MTc2NDA1NTAyNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      image3: "https://images.unsplash.com/photo-1760287363707-851f4780b98c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwYm91dGlxdWUlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjQwMTk3NDF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      main: rbImage3,
+      image2: rbMain,
+      image3: rbImage2,
     },
   },
   {
@@ -42,7 +48,7 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#1a1a1a",
     tags: ["Web", "Minimalist"],
     images: {
-      main: "https://images.unsplash.com/photo-1618037087830-5e746497905b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwYmxhY2slMjB3aGl0ZSUyMHBvcnRmb2xpb3xlbnwxfHx8fDE3NjQwNTUwMjR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      main: bwMain,
       image2: "https://images.unsplash.com/photo-1626828236991-5d6e6b5e97ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmFsJTIwbWluaW1hbCUyMGRlc2lnbnxlbnwxfHx8fDE3NjQwMTYzMzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       image3: "https://images.unsplash.com/photo-1658751890679-ada5e8e53471?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMHZhc2UlMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NDA1NTAzMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     },
@@ -57,7 +63,7 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#4ecdc4",
     tags: ["Branding", "Web"],
     images: {
-      main: "https://images.unsplash.com/photo-1744040982238-a64f0140b852?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaXN0eSUyMGZvcmVzdCUyMG5hdHVyZXxlbnwxfHx8fDE3NjQwNTUwMjR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      main: mistMain,
       image2: "https://images.unsplash.com/photo-1548853879-e3135725174c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaXN0eSUyMG1vdW50YWluJTIwbGFuZHNjYXBlfGVufDF8fHx8MTc2Mzk3MTY0MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       image3: "https://images.unsplash.com/photo-1665153949610-2366125a5635?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3Jlc3QlMjBwYXRoJTIwdHJlZXN8ZW58MXx8fHwxNzY0MDU1MDMwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     },
@@ -72,7 +78,7 @@ export const portfolioProjects: PortfolioProject[] = [
     color: "#ffe66d",
     tags: ["E-commerce", "Web", "3D"],
     images: {
-      main: "https://images.unsplash.com/photo-1638980660089-f8c568d5b9e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5ZWxsb3clMjBmdXJuaXR1cmUlMjBkZXNpZ258ZW58MXx8fHwxNzY0MDU1MDI0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      main: yellowMain,
       image2: "https://images.unsplash.com/photo-1762803841693-9efdc2fbf446?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjaGFpciUyMHByb2R1Y3R8ZW58MXx8fHwxNzYzOTY2NDE0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       image3: "https://images.unsplash.com/photo-1696774566203-b5883558badd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmdXJuaXR1cmUlMjBzaG93cm9vbSUyMGRlc2lnbnxlbnwxfHx8fDE3NjQwNTUwMzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     },

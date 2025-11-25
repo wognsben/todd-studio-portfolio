@@ -13,31 +13,10 @@ interface HomeProps {
 }
 
 export function Home({ onNavigate }: HomeProps) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   return (
     <div className="relative bg-black text-white overflow-hidden">
-      {/* Custom Magnetic Cursor */}
-      <motion.div
-        className="fixed w-8 h-8 border-2 border-[#4a5fdc] rounded-full pointer-events-none z-[200] mix-blend-difference"
-        style={{
-          left: mousePosition.x,
-          top: mousePosition.y,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        transition={{ type: "spring", stiffness: 500, damping: 28 }}
-      />
-
       {/* BRAND LOGO - Absolute positioned at top level */}
       <motion.div
         className="absolute top-[50vh] left-[51%] -translate-x-1/2 -translate-y-1/2 z-[100]"

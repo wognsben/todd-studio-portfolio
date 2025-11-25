@@ -12,6 +12,17 @@ type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Track mouse position for custom cursor
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   // Scroll to top when page changes
   useEffect(() => {
@@ -28,6 +39,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-black relative">
+      {/* Custom Magnetic Cursor - Global */}
+      <motion.div
+        className="hidden md:block fixed w-8 h-8 border-2 border-[#4a5fdc] rounded-full pointer-events-none z-[200] mix-blend-difference"
+        style={{
+          left: mousePosition.x,
+          top: mousePosition.y,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        transition={{ type: "spring", stiffness: 500, damping: 28 }}
+      />
+      
       {/* Header Navigation - Experimental Dark Style */}
       <motion.header 
         className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10"

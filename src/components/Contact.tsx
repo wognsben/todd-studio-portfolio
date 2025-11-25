@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Instagram, Mail, MapPin, Send } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
@@ -22,25 +22,65 @@ export function Contact({ onNavigate }: ContactProps) {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
+  // EmailJS 초기화
+  useEffect(() => {
+    // EmailJS Public Key를 여기에 입력하세요
+    const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    if (PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+      emailjs.init(PUBLIC_KEY);
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(false);
     
     try {
-      // EmailJS를 사용하여 이메일 전송
-      // 아래 값들은 EmailJS 계정 생성 후 설정해야 합니다
+      // EmailJS 설정 확인
+      const SERVICE_ID = 'YOUR_SERVICE_ID';
+      const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+      const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+      
+      // EmailJS가 설정되지 않았으면 mailto 사용
+      if (SERVICE_ID === 'YOUR_SERVICE_ID' || TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+        // mailto 방식으로 이메일 전송
+        const emailSubject = `[TODD Studio] ${formData.name}님의 프로젝트 문의`;
+        const emailBody = `
+이름: ${formData.name}
+이메일: ${formData.email}
+회사: ${formData.company || '없음'}
+
+메시지:
+${formData.message}
+        `;
+        
+        const mailtoLink = `mailto:wognsben1997@naver.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = mailtoLink;
+        
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+        
+        // 3초 후 폼 초기화
+        setTimeout(() => {
+          setFormData({ name: '', email: '', company: '', message: '' });
+          setSubmitSuccess(false);
+        }, 3000);
+        
+        return;
+      }
+      
+      // EmailJS가 설정되어 있으면 EmailJS 사용
       await emailjs.send(
-        'YOUR_SERVICE_ID',        // EmailJS 서비스 ID
-        'YOUR_TEMPLATE_ID',       // EmailJS 템플릿 ID
+        SERVICE_ID,
+        TEMPLATE_ID,
         {
           from_name: formData.name,
           from_email: formData.email,
           company: formData.company || '없음',
           message: formData.message,
           to_email: 'wognsben1997@naver.com',
-        },
-        'YOUR_PUBLIC_KEY'         // EmailJS Public Key
+        }
       );
       
       setIsSubmitting(false);
@@ -57,10 +97,10 @@ export function Contact({ onNavigate }: ContactProps) {
       setIsSubmitting(false);
       setSubmitError(true);
       
-      // 에러 메시지 3초 후 제거
+      // 에러 메시지 5초 후 제거
       setTimeout(() => {
         setSubmitError(false);
-      }, 3000);
+      }, 5000);
     }
   };
 
@@ -333,19 +373,19 @@ export function Contact({ onNavigate }: ContactProps) {
                   </motion.button>
                   
                   {/* Info Message */}
-                  <div className="text-xs text-center mt-2 space-y-1">
+                  <div className="text-xs text-center mt-2">
                     <p className="text-gray-600">
-                      EmailJS 설정이 필요합니다
+                      현재 이메일 클라이언트를 통해 전송됩니다
                     </p>
-                    <p className="text-[10px] text-gray-700">
-                      <a 
+                    <p className="text-[10px] text-gray-700 mt-1">
+                      더 나은 경험을 위해 <a 
                         href="https://www.emailjs.com/" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="underline hover:text-[#4a5fdc]"
                       >
                         EmailJS
-                      </a>에서 무료 계정을 만들고 Service ID, Template ID, Public Key를 Contact.tsx에 입력하세요
+                      </a> 설정을 추천합니다
                     </p>
                   </div>
                 </form>

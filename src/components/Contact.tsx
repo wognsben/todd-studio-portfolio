@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Instagram, Mail, MapPin, Send } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -17,11 +18,50 @@ export function Contact({ onNavigate }: ContactProps) {
   });
 
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission
+    setIsSubmitting(true);
+    setSubmitError(false);
+    
+    try {
+      // EmailJS를 사용하여 이메일 전송
+      // 아래 값들은 EmailJS 계정 생성 후 설정해야 합니다
+      await emailjs.send(
+        'YOUR_SERVICE_ID',        // EmailJS 서비스 ID
+        'YOUR_TEMPLATE_ID',       // EmailJS 템플릿 ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          company: formData.company || '없음',
+          message: formData.message,
+          to_email: 'wognsben1997@naver.com',
+        },
+        'YOUR_PUBLIC_KEY'         // EmailJS Public Key
+      );
+      
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+      
+      // 3초 후 폼 초기화
+      setTimeout(() => {
+        setFormData({ name: '', email: '', company: '', message: '' });
+        setSubmitSuccess(false);
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Email send error:', error);
+      setIsSubmitting(false);
+      setSubmitError(true);
+      
+      // 에러 메시지 3초 후 제거
+      setTimeout(() => {
+        setSubmitError(false);
+      }, 3000);
+    }
   };
 
   const contactInfo = [
@@ -256,18 +296,58 @@ export function Contact({ onNavigate }: ContactProps) {
                   {/* Submit Button */}
                   <motion.button
                     type="submit"
-                    className="w-full py-4 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white text-lg flex items-center justify-center gap-3 hover:shadow-2xl transition-all group"
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmitting || submitSuccess}
+                    className={`w-full py-4 text-white text-lg flex items-center justify-center gap-3 transition-all group ${
+                      submitSuccess 
+                        ? 'bg-green-600' 
+                        : submitError
+                        ? 'bg-red-600'
+                        : 'bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] hover:shadow-2xl'
+                    }`}
+                    whileHover={!isSubmitting && !submitSuccess ? { scale: 1.02, y: -2 } : {}}
+                    whileTap={!isSubmitting && !submitSuccess ? { scale: 0.98 } : {}}
                   >
-                    SEND MESSAGE
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <Send className="w-5 h-5" />
-                    </motion.div>
+                    {submitSuccess ? (
+                      <>
+                        메시지가 전송되었습니다! ✓
+                      </>
+                    ) : submitError ? (
+                      <>
+                        전송 실패. 다시 시도해주세요.
+                      </>
+                    ) : isSubmitting ? (
+                      <>
+                        전송 중...
+                      </>
+                    ) : (
+                      <>
+                        SEND MESSAGE
+                        <motion.div
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          <Send className="w-5 h-5" />
+                        </motion.div>
+                      </>
+                    )}
                   </motion.button>
+                  
+                  {/* Info Message */}
+                  <div className="text-xs text-center mt-2 space-y-1">
+                    <p className="text-gray-600">
+                      EmailJS 설정이 필요합니다
+                    </p>
+                    <p className="text-[10px] text-gray-700">
+                      <a 
+                        href="https://www.emailjs.com/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="underline hover:text-[#4a5fdc]"
+                      >
+                        EmailJS
+                      </a>에서 무료 계정을 만들고 Service ID, Template ID, Public Key를 Contact.tsx에 입력하세요
+                    </p>
+                  </div>
                 </form>
 
                 {/* Decorative Elements */}

@@ -633,6 +633,10 @@
     margin-top: calc(var(--spacing) * 8);
   }
 
+  .mt-16 {
+    margin-top: calc(var(--spacing) * 16);
+  }
+
   .mb-0\.5 {
     margin-bottom: calc(var(--spacing) * .5);
   }
@@ -875,10 +879,6 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .flex-col {
     flex-direction: column;
   }
@@ -905,10 +905,6 @@
 
   .justify-center {
     justify-content: center;
-  }
-
-  .justify-end {
-    justify-content: flex-end;
   }
 
   .gap-2 {
@@ -1030,6 +1026,10 @@
 
   .border-black {
     border-color: var(--color-black);
+  }
+
+  .border-transparent {
+    border-color: #0000;
   }
 
   .border-white {
@@ -1320,6 +1320,10 @@
     text-align: center;
   }
 
+  .text-left {
+    text-align: left;
+  }
+
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
@@ -1385,6 +1389,10 @@
 
   .text-\[10px\] {
     font-size: 10px;
+  }
+
+  .text-\[12rem\] {
+    font-size: 12rem;
   }
 
   .leading-none {
@@ -1529,6 +1537,10 @@
 
   .opacity-0 {
     opacity: 0;
+  }
+
+  .opacity-5 {
+    opacity: .05;
   }
 
   .opacity-10 {
@@ -1693,6 +1705,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:border-white:hover {
+      border-color: var(--color-white);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:border-white\/30:hover {
       border-color: #ffffff4d;
     }
@@ -1768,18 +1786,20 @@
     }
   }
 
+  @media (hover: hover) {
+    .hover\:shadow-\[\#4a5fdc\]\/50:hover {
+      --tw-shadow-color: #4a5fdc80;
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:shadow-\[\#4a5fdc\]\/50:hover {
+        --tw-shadow-color: color-mix(in oklab, oklab(54.1424% .00434163 -.191164 / .5) var(--tw-shadow-alpha), transparent);
+      }
+    }
+  }
+
   .focus\:border-\[\#4a5fdc\]:focus {
     border-color: #4a5fdc;
-  }
-
-  .focus\:border-white\/50:focus {
-    border-color: #ffffff80;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .focus\:border-white\/50:focus {
-      border-color: color-mix(in oklab, var(--color-white) 50%, transparent);
-    }
   }
 
   .focus\:outline-none:focus {
@@ -1864,14 +1884,14 @@
   }
 
   @media (width >= 48rem) {
-    .md\:col-span-4 {
-      grid-column: span 4 / span 4;
+    .md\:col-span-10 {
+      grid-column: span 10 / span 10;
     }
   }
 
   @media (width >= 48rem) {
-    .md\:col-span-6 {
-      grid-column: span 6 / span 6;
+    .md\:hidden {
+      display: none;
     }
   }
 
@@ -1896,12 +1916,6 @@
   @media (width >= 48rem) {
     .md\:flex-row {
       flex-direction: row;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:items-center {
-      align-items: center;
     }
   }
 
@@ -1965,6 +1979,18 @@
   }
 
   @media (width >= 64rem) {
+    .lg\:col-span-5 {
+      grid-column: span 5 / span 5;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:col-span-7 {
+      grid-column: span 7 / span 7;
+    }
+  }
+
+  @media (width >= 64rem) {
     .lg\:flex {
       display: flex;
     }
@@ -1989,8 +2015,33 @@
   }
 
   @media (width >= 64rem) {
+    .lg\:grid-cols-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:gap-16 {
+      gap: calc(var(--spacing) * 16);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:self-end {
+      align-self: flex-end;
+    }
+  }
+
+  @media (width >= 64rem) {
     .lg\:px-8 {
       padding-inline: calc(var(--spacing) * 8);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:text-2xl {
+      font-size: var(--text-2xl);
+      line-height: var(--tw-leading, var(--text-2xl--line-height));
     }
   }
 
@@ -2019,6 +2070,19 @@
     .lg\:text-9xl {
       font-size: var(--text-9xl);
       line-height: var(--tw-leading, var(--text-9xl--line-height));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:text-\[20rem\] {
+      font-size: 20rem;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .xl\:text-8xl {
+      font-size: var(--text-8xl);
+      line-height: var(--tw-leading, var(--text-8xl--line-height));
     }
   }
 

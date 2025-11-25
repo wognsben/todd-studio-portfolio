@@ -1,10 +1,16 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Instagram, X } from 'lucide-react';
+import { Instagram, Play, X } from 'lucide-react';
 import { portfolioProjects } from '../data/portfolio';
 import scribblePortrait from 'figma:asset/43460bda5851173b4cdca07ffd882dfb8b33bdf2.png';
 
-export function Work() {
+type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
+
+interface WorkProps {
+  onNavigate: (page: PageType) => void;
+}
+
+export function Work({ onNavigate }: WorkProps) {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   const selectedProjectData = portfolioProjects.find(p => p.id === selectedProject);
@@ -275,6 +281,7 @@ export function Work() {
               className="px-12 py-6 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white text-xl hover:shadow-2xl transition-all"
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate('contact')}
             >
               LET'S TALK →
             </motion.button>
@@ -288,8 +295,32 @@ export function Work() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             {/* Brand */}
             <div>
-              <div className="text-4xl mb-4 tracking-tighter">
-                <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>TODD</span>
+              <div className="cursor-pointer relative group mb-4">
+                <div className="relative flex items-center gap-2">
+                  <div className="flex flex-col items-center">
+                    <span className="text-xl text-white">✹</span>
+                    <span className="text-[8px] text-gray-500 tracking-wider mt-0.5">EST. 2025</span>
+                  </div>
+                  <div className="relative">
+                    <h1 className="text-4xl tracking-tighter text-white relative z-10">TODD</h1>
+                    <h1 
+                      className="text-4xl tracking-tighter text-[#4a5fdc] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ transform: 'translate(2px, -2px)' }}
+                    >
+                      TODD
+                    </h1>
+                    <h1 
+                      className="text-4xl tracking-tighter text-[#ff6b6b] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ transform: 'translate(-2px, 2px)' }}
+                    >
+                      TODD
+                    </h1>
+                  </div>
+                </div>
+                <div 
+                  className="h-0.5 bg-gradient-to-r from-[#4a5fdc] via-white to-[#ff6b6b] mt-1"
+                  style={{ transform: 'scaleX(0)' }}
+                />
               </div>
               <p className="text-gray-400 text-sm mb-6">
                 규칙을 깨는 선<br/>
@@ -317,11 +348,19 @@ export function Work() {
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">QUICK LINKS</h4>
               <ul className="space-y-3 text-gray-400">
-                {['Work', 'Insights', 'About', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-white transition-colors hover:pl-2 inline-block">
-                      {link}
-                    </a>
+                {[
+                  { name: 'Work', page: 'work' as PageType },
+                  { name: 'Insights', page: 'insights' as PageType },
+                  { name: 'About', page: 'about' as PageType },
+                  { name: 'Contact', page: 'contact' as PageType }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <button
+                      onClick={() => onNavigate(link.page)}
+                      className="hover:text-white transition-colors hover:pl-2 inline-block text-left"
+                    >
+                      {link.name}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -330,7 +369,7 @@ export function Work() {
             {/* Contact */}
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">CONTACT</h4>
-              <p className="text-gray-400 text-sm mb-2">wognsben19977@naver.com</p>
+              <p className="text-gray-400 text-sm mb-2">wognsben1997@naver.com</p>
               <p className="text-gray-400 text-sm">Seoul, South Korea</p>
             </div>
           </div>

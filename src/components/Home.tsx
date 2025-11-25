@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Instagram } from 'lucide-react';
 import twoCows from 'figma:asset/a82612d2cba4580a0a02341ee522bea35c57bcc9.png';
@@ -6,7 +6,13 @@ import scribbleBouquet from 'figma:asset/e642f3a26144e8fc59144d43a92d2a476ca151f
 import toddLogo from 'figma:asset/347c327e93f757b38013444742883c32c7d05493.png';
 import { portfolioProjects } from '../data/portfolio';
 
-export function Home() {
+type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
+
+interface HomeProps {
+  onNavigate: (page: PageType) => void;
+}
+
+export function Home({ onNavigate }: HomeProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
 
@@ -329,29 +335,25 @@ export function Home() {
                 number: "01",
                 title: "UI/UX Design",
                 description: "실험적이고 대담한 사용자 경험 디자인",
-                color: "#4a5fdc"
               },
               {
                 number: "02",
                 title: "Frontend Development",
                 description: "최신 기술 스택으로 구현하는 인터랙티브 웹",
-                color: "#ff6b6b"
               },
               {
                 number: "03",
                 title: "Branding & Identity",
                 description: "차별화된 브랜드 아이덴티티 구축",
-                color: "#4ecdc4"
               },
             ].map((service, index) => (
               <motion.div
                 key={index}
-                className="group border-t border-white/10 py-12 hover:bg-white/5 transition-all cursor-pointer"
+                className="group border-t border-white/10 py-12 hover:bg-white/5 transition-all"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ x: 20 }}
               >
                 <div className="grid md:grid-cols-12 gap-8 items-center">
                   <div className="md:col-span-2">
@@ -359,25 +361,34 @@ export function Home() {
                       {service.number}
                     </div>
                   </div>
-                  <div className="md:col-span-6">
+                  <div className="md:col-span-10">
                     <h3 className="text-4xl sm:text-5xl lg:text-6xl mb-4 group-hover:text-transparent group-hover:[-webkit-text-stroke:2px_white] transition-all">
                       {service.title}
                     </h3>
                     <p className="text-gray-400 text-lg">{service.description}</p>
                   </div>
-                  <div className="md:col-span-4 flex justify-end">
-                    <motion.div
-                      className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl"
-                      style={{ backgroundColor: service.color }}
-                      whileHover={{ scale: 1.2, rotate: 90 }}
-                    >
-                      →
-                    </motion.div>
-                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* View All Services Button */}
+          <motion.div
+            className="mt-16 flex justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <motion.button
+              className="px-12 py-6 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white text-lg hover:shadow-2xl hover:shadow-[#4a5fdc]/50 transition-all border-2 border-transparent hover:border-white"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate('insights')}
+            >
+              VIEW ALL SERVICES →
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
@@ -422,6 +433,7 @@ export function Home() {
               className="text-white border-2 border-white px-8 py-4 hover:bg-white hover:text-black transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate('work')}
             >
               VIEW ALL →
             </motion.button>
@@ -438,6 +450,7 @@ export function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
+                onClick={() => onNavigate('work')}
               >
                 {/* Project Image - 4:3 aspect ratio */}
                 <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-black">
@@ -517,6 +530,7 @@ export function Home() {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
+                onClick={() => onNavigate('contact')}
               >
                 START A PROJECT →
               </motion.button>
@@ -605,11 +619,18 @@ export function Home() {
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">QUICK LINKS</h4>
               <ul className="space-y-3 text-gray-400">
-                {['Work', 'Insights', 'About', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-white transition-colors hover:pl-2 inline-block">
-                      {link}
-                    </a>
+                {[
+                  { name: 'Work', page: 'work' as PageType },
+                  { name: 'Insights', page: 'insights' as PageType },
+                  { name: 'About', page: 'about' as PageType },
+                  { name: 'Contact', page: 'contact' as PageType }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <button
+                      onClick={() => onNavigate(link.page)}
+                      className="hover:text-white transition-colors hover:pl-2 inline-block text-left"
+                    >
+                      {link.name}</button>
                   </li>
                 ))}
               </ul>
@@ -618,7 +639,7 @@ export function Home() {
             {/* Contact */}
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">CONTACT</h4>
-              <p className="text-gray-400 text-sm mb-2">wognsben19977@naver.com</p>
+              <p className="text-gray-400 text-sm mb-2">wognsben1997@naver.com</p>
               <p className="text-gray-400 text-sm">Seoul, South Korea</p>
             </div>
           </div>

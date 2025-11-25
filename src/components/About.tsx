@@ -1,11 +1,17 @@
-import { motion } from 'motion/react';
-import { Instagram, Code, Palette, Zap, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Instagram, Sparkles, Target, Zap, Users } from 'lucide-react';
 import scribbleBlue from 'figma:asset/d6c974dcd4689ee0b01faa57207ef6bcfe06d967.png';
 
-export function About() {
+type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
+
+interface AboutProps {
+  onNavigate: (page: PageType) => void;
+}
+
+export function About({ onNavigate }: AboutProps) {
   const values = [
     {
-      icon: <Palette className="w-8 h-8" />,
+      icon: <Sparkles className="w-8 h-8" />,
       title: "Experimental",
       description: "규칙을 깨고 새로운 표현을 탐구합니다",
       color: "#4a5fdc",
@@ -17,7 +23,7 @@ export function About() {
       color: "#ff6b6b",
     },
     {
-      icon: <Code className="w-8 h-8" />,
+      icon: <Target className="w-8 h-8" />,
       title: "Technical",
       description: "최신 기술로 완벽하게 구현합니다",
       color: "#4ecdc4",
@@ -27,40 +33,6 @@ export function About() {
       title: "Collaborative",
       description: "함께 만들어가는 창의적 과정을 중시합니다",
       color: "#ffe66d",
-    },
-  ];
-
-  const timeline = [
-    { year: "2025", event: "TODD Studio 설립" },
-    { year: "2025 Q2", event: "첫 클라이언트 프로젝트 완료" },
-    { year: "2025 Q3", event: "디자인 어워드 수상" },
-    { year: "2025 Q4", event: "팀 확장 및 오피스 이전" },
-  ];
-
-  const philosophy = [
-    {
-      number: '01',
-      title: '개성 100%',
-      description: '모든 프로젝트는 독특하고 차별화된 아이덴티티를 가져야 합니다.',
-      color: '#4a5fdc',
-    },
-    {
-      number: '02',
-      title: '독창성 우선',
-      description: '트렌드를 따르지 않고, 새로운 트렌드를 만들어갑니다.',
-      color: '#ff6b6b',
-    },
-    {
-      number: '03',
-      title: '실험적 접근',
-      description: '규칙을 깨고 새로운 표현 방법을 끊임없이 탐구합니다.',
-      color: '#4ecdc4',
-    },
-    {
-      number: '04',
-      title: '기술과 예술의 융합',
-      description: '최신 기술을 활용하여 예술적 비전을 완벽하게 구현합니다.',
-      color: '#ffe66d',
     },
   ];
 
@@ -120,62 +92,62 @@ export function About() {
       {/* Mission Section */}
       <section className="relative py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left - Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="text-sm tracking-[0.4em] text-gray-500 mb-8">— OUR MISSION —</div>
-              <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-8 leading-tight">
-                <span className="text-transparent" style={{ WebkitTextStroke: '2px #4a5fdc' }}>
-                  Breaking Rules,
-                </span>
-                <br />
-                <span className="text-white">Making Impact</span>
-              </h2>
-              <p className="text-xl text-gray-400 leading-relaxed mb-8">
-                TODD Studio는 전통적인 디자인 규칙을 벗어나 실험적이고 대담한 접근으로 새로운 디지털 경험을 만듭니다.
-              </p>
-              <p className="text-lg text-gray-500 leading-relaxed">
-                우리는 개성 100, 독특함 100의 철학으로 모든 프로젝트에 임하며, 
-                최신 기술과 창의적인 디자인을 결합하여 기억에 남는 결과물을 창조합니다.
-              </p>
-            </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            {/* Tag - 왼쪽 상단 */}
+            <div className="text-sm tracking-[0.4em] text-gray-500 mb-12">
+              — OUR MISSION —
+            </div>
 
-            {/* Right - Stats */}
+            {/* 비대칭 레이아웃 */}
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
+              {/* 왼쪽: 타이틀 (7 columns) */}
+              <motion.div
+                className="lg:col-span-7"
+                initial={{ opacity: 0, x: -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <h2 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-tight">
+                  <span className="text-transparent" style={{ WebkitTextStroke: '2px #4a5fdc' }}>
+                    Breaking Rules,
+                  </span>
+                  <br />
+                  <span className="text-white">Making Impact</span>
+                </h2>
+              </motion.div>
+
+              {/* 오른쪽: 설명 (5 columns, 아래쪽 정렬) */}
+              <motion.div
+                className="lg:col-span-5 lg:self-end"
+                initial={{ opacity: 0, x: 60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <p className="text-xl lg:text-2xl text-gray-400 leading-relaxed">
+                  TODD Studio는 전통적인 디자인 규칙을 벗어나 실험적이고 대담한 접근으로 새로운 디지털 경험을 만듭니다.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* 장식용 큰 텍스트 (배경) */}
             <motion.div
-              className="grid grid-cols-2 gap-8"
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="absolute top-0 right-0 text-[12rem] lg:text-[20rem] opacity-5 pointer-events-none leading-none"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.05 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              style={{ WebkitTextStroke: '2px white' }}
             >
-              {[
-                { value: "100+", label: "Projects", color: "#4a5fdc" },
-                { value: "50+", label: "Clients", color: "#ff6b6b" },
-                { value: "24/7", label: "Support", color: "#4ecdc4" },
-                { value: "100%", label: "Passion", color: "#ffe66d" },
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center p-8 border border-white/10 hover:border-white/30 transition-colors"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <div className="text-6xl mb-4" style={{ color: stat.color }}>
-                    {stat.value}
-                  </div>
-                  <div className="text-sm tracking-widest text-gray-500">{stat.label}</div>
-                </motion.div>
-              ))}
+              <span className="text-transparent">TODD</span>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -223,109 +195,30 @@ export function About() {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* TODD Introduction Section */}
       <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-t border-white/10">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-[1400px] mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
           >
-            <div className="text-sm tracking-[0.4em] text-gray-500 mb-4">— TODD PHILOSOPHY —</div>
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-8">
+            <div className="text-sm tracking-[0.4em] text-gray-500 mb-8">— MEET TODD —</div>
+            <h2 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl mb-12 leading-tight">
               <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>
-                TODD를 만나보세요
+                TODD를
               </span>
+              <br />
+              <span className="text-white">만나보세요</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              차별화된 접근으로 독특한 디지털 경험을 만드는<br />
-              TODD Studio의 디자인 철학입니다.
+            <p className="text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              실험적이고 대담한 디자인으로<br />
+              새로운 디지털 경험을 만드는<br className="md:hidden" />
+              <span className="text-transparent" style={{ WebkitTextStroke: '1px #4a5fdc' }}>
+                TODD Studio
+              </span>입니다.
             </p>
           </motion.div>
-
-          <div className="space-y-1">
-            {philosophy.map((item, index) => (
-              <motion.div
-                key={item.number}
-                className="group cursor-pointer border-t border-white/10 py-8 hover:bg-white/5 transition-all px-6"
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                whileHover={{ x: 10 }}
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                  {/* Number & Content */}
-                  <div className="flex items-center gap-6 md:gap-8 flex-1">
-                    <div
-                      className="text-5xl md:text-6xl opacity-40 group-hover:opacity-100 transition-opacity flex-shrink-0"
-                      style={{ color: item.color }}
-                    >
-                      {item.number}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl md:text-3xl mb-2 group-hover:text-transparent group-hover:[-webkit-text-stroke:1px_white] transition-all">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm md:text-base">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Arrow */}
-                  <motion.div
-                    className="text-4xl md:text-5xl text-white/20 group-hover:text-white transition-colors flex-shrink-0"
-                    whileHover={{ x: 10, rotate: -45 }}
-                  >
-                    →
-                  </motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Bottom Border */}
-          <div className="border-t border-white/10 mt-1" />
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-t border-white/10">
-        <div className="max-w-[1000px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="text-sm tracking-[0.4em] text-gray-500 mb-4">— OUR JOURNEY —</div>
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl">Timeline</h2>
-          </motion.div>
-
-          <div className="space-y-0">
-            {timeline.map((item, index) => (
-              <motion.div
-                key={index}
-                className="group border-t border-white/10 py-8 hover:bg-white/5 transition-all"
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ x: 20 }}
-              >
-                <div className="grid md:grid-cols-3 gap-8 items-center">
-                  <div className="text-4xl text-gray-600 group-hover:text-white transition-colors">
-                    {item.year}
-                  </div>
-                  <div className="md:col-span-2 text-2xl group-hover:text-transparent group-hover:[-webkit-text-stroke:1px_white] transition-all">
-                    {item.event}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -352,6 +245,7 @@ export function About() {
               className="px-12 py-6 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white text-xl hover:shadow-2xl transition-all"
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate('contact')}
             >
               GET IN TOUCH →
             </motion.button>
@@ -365,8 +259,32 @@ export function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             {/* Brand */}
             <div>
-              <div className="text-4xl mb-4 tracking-tighter">
-                <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>TODD</span>
+              <div className="cursor-pointer relative group mb-4">
+                <div className="relative flex items-center gap-2">
+                  <div className="flex flex-col items-center">
+                    <span className="text-xl text-white">✹</span>
+                    <span className="text-[8px] text-gray-500 tracking-wider mt-0.5">EST. 2025</span>
+                  </div>
+                  <div className="relative">
+                    <h1 className="text-4xl tracking-tighter text-white relative z-10">TODD</h1>
+                    <h1 
+                      className="text-4xl tracking-tighter text-[#4a5fdc] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ transform: 'translate(2px, -2px)' }}
+                    >
+                      TODD
+                    </h1>
+                    <h1 
+                      className="text-4xl tracking-tighter text-[#ff6b6b] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ transform: 'translate(-2px, 2px)' }}
+                    >
+                      TODD
+                    </h1>
+                  </div>
+                </div>
+                <div 
+                  className="h-0.5 bg-gradient-to-r from-[#4a5fdc] via-white to-[#ff6b6b] mt-1"
+                  style={{ transform: 'scaleX(0)' }}
+                />
               </div>
               <p className="text-gray-400 text-sm mb-6">
                 규칙을 깨는 선<br/>
@@ -394,11 +312,19 @@ export function About() {
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">QUICK LINKS</h4>
               <ul className="space-y-3 text-gray-400">
-                {['Work', 'Insights', 'About', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-white transition-colors hover:pl-2 inline-block">
-                      {link}
-                    </a>
+                {[
+                  { name: 'Work', page: 'work' as PageType },
+                  { name: 'Insights', page: 'insights' as PageType },
+                  { name: 'About', page: 'about' as PageType },
+                  { name: 'Contact', page: 'contact' as PageType }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <button
+                      onClick={() => onNavigate(link.page)}
+                      className="hover:text-white transition-colors hover:pl-2 inline-block text-left"
+                    >
+                      {link.name}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -407,7 +333,7 @@ export function About() {
             {/* Contact */}
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">CONTACT</h4>
-              <p className="text-gray-400 text-sm mb-2">wognsben19977@naver.com</p>
+              <p className="text-gray-400 text-sm mb-2">wognsben1997@naver.com</p>
               <p className="text-gray-400 text-sm">Seoul, South Korea</p>
             </div>
           </div>

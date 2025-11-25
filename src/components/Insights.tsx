@@ -1,10 +1,15 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Instagram, ArrowRight } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import scribbleArt from 'figma:asset/704eb0ad72d4b75ea89f692f5bb4f374d8ae5163.png';
+import { Instagram } from 'lucide-react';
+import scribbleMarket from 'figma:asset/47d2abc8f4e0a63d0aec8b2f80c0a53354ed4997.png';
 
-export function Insights() {
+type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
+
+interface InsightsProps {
+  onNavigate: (page: PageType) => void;
+}
+
+export function Insights({ onNavigate }: InsightsProps) {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
 
   const services = [
@@ -65,7 +70,7 @@ export function Insights() {
         {/* Background Image (8번) */}
         <div className="absolute inset-0 z-0">
           <motion.img
-            src={scribbleArt}
+            src={scribbleMarket}
             alt="Insights Background"
             className="w-full h-full object-cover opacity-20"
             initial={{ scale: 1.2, rotate: -5 }}
@@ -178,37 +183,34 @@ export function Insights() {
       <section className="relative py-32 px-4 sm:px-6 lg:px-8 border-t border-white/10">
         <div className="max-w-[800px] mx-auto text-center">
           <motion.div
+            className="text-center"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-8 leading-tight">
               <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>
-                Stay Updated
+                Visit Our Blog
               </span>
             </h2>
             <p className="text-xl text-gray-400 mb-12">
               최신 인사이트와 디자인 트렌드를<br />
-              가장 먼저 받아보세요.
+              네이버 블로그에서 확인하세요.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 px-6 py-4 bg-white/5 border border-white/20 text-white placeholder:text-gray-600 focus:outline-none focus:border-white/50 transition-colors"
-              />
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white whitespace-nowrap hover:shadow-2xl transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                SUBSCRIBE
-              </motion.button>
-            </div>
+            <motion.a
+              href="https://blog.naver.com/toddstudio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-12 py-6 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] text-white text-xl hover:shadow-2xl transition-all"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              VISIT BLOG →
+            </motion.a>
 
             <div className="mt-8 text-sm text-gray-600">
-              무료로 구독하고 언제든지 구독 취소 가능합니다.
+              blog.naver.com/toddstudio
             </div>
           </motion.div>
         </div>
@@ -220,8 +222,32 @@ export function Insights() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             {/* Brand */}
             <div>
-              <div className="text-4xl mb-4 tracking-tighter">
-                <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>TODD</span>
+              <div className="cursor-pointer relative group mb-4">
+                <div className="relative flex items-center gap-2">
+                  <div className="flex flex-col items-center">
+                    <span className="text-xl text-white">✹</span>
+                    <span className="text-[8px] text-gray-500 tracking-wider mt-0.5">EST. 2025</span>
+                  </div>
+                  <div className="relative">
+                    <h1 className="text-4xl tracking-tighter text-white relative z-10">TODD</h1>
+                    <h1 
+                      className="text-4xl tracking-tighter text-[#4a5fdc] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ transform: 'translate(2px, -2px)' }}
+                    >
+                      TODD
+                    </h1>
+                    <h1 
+                      className="text-4xl tracking-tighter text-[#ff6b6b] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ transform: 'translate(-2px, 2px)' }}
+                    >
+                      TODD
+                    </h1>
+                  </div>
+                </div>
+                <div 
+                  className="h-0.5 bg-gradient-to-r from-[#4a5fdc] via-white to-[#ff6b6b] mt-1"
+                  style={{ transform: 'scaleX(0)' }}
+                />
               </div>
               <p className="text-gray-400 text-sm mb-6">
                 규칙을 깨는 선<br/>
@@ -249,11 +275,19 @@ export function Insights() {
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">QUICK LINKS</h4>
               <ul className="space-y-3 text-gray-400">
-                {['Work', 'Insights', 'About', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-white transition-colors hover:pl-2 inline-block">
-                      {link}
-                    </a>
+                {[
+                  { name: 'Work', page: 'work' as PageType },
+                  { name: 'Insights', page: 'insights' as PageType },
+                  { name: 'About', page: 'about' as PageType },
+                  { name: 'Contact', page: 'contact' as PageType }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <button
+                      onClick={() => onNavigate(link.page)}
+                      className="hover:text-white transition-colors hover:pl-2 inline-block text-left"
+                    >
+                      {link.name}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -262,7 +296,7 @@ export function Insights() {
             {/* Contact */}
             <div>
               <h4 className="text-sm tracking-widest mb-6 text-gray-500">CONTACT</h4>
-              <p className="text-gray-400 text-sm mb-2">wognsben19977@naver.com</p>
+              <p className="text-gray-400 text-sm mb-2">wognsben1997@naver.com</p>
               <p className="text-gray-400 text-sm">Seoul, South Korea</p>
             </div>
           </div>

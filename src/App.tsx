@@ -226,11 +226,11 @@ export default function App() {
           transition={{ duration: 0.5 }}
           className="relative"
         >
-          {currentPage === 'home' && <Home />}
-          {currentPage === 'work' && <Work />}
-          {currentPage === 'insights' && <Insights />}
-          {currentPage === 'about' && <About />}
-          {currentPage === 'contact' && <Contact />}
+          {currentPage === 'home' && <Home onNavigate={setCurrentPage} />}
+          {currentPage === 'work' && <Work onNavigate={setCurrentPage} />}
+          {currentPage === 'insights' && <Insights onNavigate={setCurrentPage} />}
+          {currentPage === 'about' && <About onNavigate={setCurrentPage} />}
+          {currentPage === 'contact' && <Contact onNavigate={setCurrentPage} />}
         </motion.main>
       </AnimatePresence>
     </div>

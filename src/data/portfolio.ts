@@ -2,9 +2,15 @@
 import rbMain from "figma:asset/6a7575571474ebf4591c967ab1e6418384ba06b1.png";
 import rbImage2 from "figma:asset/d412fb27c69f69d36d0cbffd88b059281e8b83ed.png";
 import rbImage3 from "figma:asset/bad6b33e2ce93baf945c4c3d01c23b4902a3a132.png";
-import bwMain from "figma:asset/66cd8d456ff9e532909f5b50b5a4f7de14549b29.png";
+import bwMain from "figma:asset/3c576367987f0b1544d49df23f3b39859ba41267.png";
+import bwImage2 from "figma:asset/7cf9c46d5d6c9269b6f36bcd004ea41b1918b5e0.png";
+import bwImage3 from "figma:asset/dfe4ee2f9bfa01cde2a15eb4ab44cbf3a1fcc76e.png";
 import mistMain from "figma:asset/710982991a83cb09d6719798395dd2feffd1943a.png";
+import mistImage2 from "figma:asset/564fb4953c719c3a3be8b9725767596657850d0e.png";
+import mistImage3 from "figma:asset/850ddb83e1d85608807bff85313a56431c85281e.png";
 import yellowMain from "figma:asset/983dd6b4ec0dd780a2a30fabd5a275437c3f3689.png";
+import yellowImage2 from "figma:asset/06a2f90cafc3c201c8bb2aa0a27e5dd8830b725d.png";
+import yellowImage3 from "figma:asset/14b89926704be66532d28bbd529bb38d8ff8734a.png";
 
 export interface PortfolioProject {
   id: number;
@@ -49,8 +55,8 @@ export const portfolioProjects: PortfolioProject[] = [
     tags: ["Web", "Minimalist"],
     images: {
       main: bwMain,
-      image2: "https://images.unsplash.com/photo-1626828236991-5d6e6b5e97ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmFsJTIwbWluaW1hbCUyMGRlc2lnbnxlbnwxfHx8fDE3NjQwMTYzMzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      image3: "https://images.unsplash.com/photo-1658751890679-ada5e8e53471?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMHZhc2UlMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NDA1NTAzMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image2: bwImage2,
+      image3: bwImage3,
     },
   },
   {
@@ -64,8 +70,8 @@ export const portfolioProjects: PortfolioProject[] = [
     tags: ["Branding", "Web"],
     images: {
       main: mistMain,
-      image2: "https://images.unsplash.com/photo-1548853879-e3135725174c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaXN0eSUyMG1vdW50YWluJTIwbGFuZHNjYXBlfGVufDF8fHx8MTc2Mzk3MTY0MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      image3: "https://images.unsplash.com/photo-1665153949610-2366125a5635?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3Jlc3QlMjBwYXRoJTIwdHJlZXN8ZW58MXx8fHwxNzY0MDU1MDMwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image2: mistImage2,
+      image3: mistImage3,
     },
   },
   {
@@ -79,8 +85,8 @@ export const portfolioProjects: PortfolioProject[] = [
     tags: ["E-commerce", "Web", "3D"],
     images: {
       main: yellowMain,
-      image2: "https://images.unsplash.com/photo-1762803841693-9efdc2fbf446?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjaGFpciUyMHByb2R1Y3R8ZW58MXx8fHwxNzYzOTY2NDE0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      image3: "https://images.unsplash.com/photo-1696774566203-b5883558badd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmdXJuaXR1cmUlMjBzaG93cm9vbSUyMGRlc2lnbnxlbnwxfHx8fDE3NjQwNTUwMzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image2: yellowImage2,
+      image3: yellowImage3,
     },
   },
 ];

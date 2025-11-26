@@ -6,7 +6,7 @@ import imageUrlBuilder from '@sanity/image-url';
 export const client = createClient({
   projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'ogeoz66y',
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
-  apiVersion: '2025-01-01',
+  apiVersion: '2024-11-26',
   useCdn: true, // 빠른 로딩을 위한 CDN 사용
 });
 

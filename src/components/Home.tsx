@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { useState, useEffect } from 'react';
 import { Instagram } from 'lucide-react';
 import { portfolioProjects } from '../data/portfolio';
+import { getPortfolios, urlFor } from '../lib/sanity';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -9,8 +10,41 @@ interface HomeProps {
   onNavigate: (page: PageType) => void;
 }
 
+interface SanityPortfolio {
+  _id: string;
+  title: string;
+  year: string;
+  description: string;
+  mainImage: any;
+  images: Array<{ asset: any; alt?: string }>;
+  order?: number;
+}
+
 export function Home({ onNavigate }: HomeProps) {
   const { scrollYProgress } = useScroll();
+  const [sanityProjects, setSanityProjects] = useState<SanityPortfolio[]>([]);
+  const [useSanity, setUseSanity] = useState(true);
+
+  // Sanity에서 포트폴리오 가져오기
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const projects = await getPortfolios();
+        if (projects && projects.length > 0) {
+          setSanityProjects(projects);
+          setUseSanity(true);
+        } else {
+          setUseSanity(false);
+        }
+      } catch (error) {
+        console.error('Sanity 데이터 로드 실패:', error);
+        setUseSanity(false);
+      }
+    }
+    fetchProjects();
+  }, []);
+
+  const projects = useSanity ? sanityProjects : portfolioProjects;
 
   return (
     <div className="relative bg-black text-white overflow-hidden">
@@ -27,7 +61,7 @@ export function Home({ onNavigate }: HomeProps) {
         {/* Logo Container */}
         <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center">
           <img
-            src="/images/todd-logo.png"
+            src="/images/brand-logo/todd-logo.png"
             alt="TODD Logo"
             className="w-full h-full object-contain"
           />
@@ -158,27 +192,6 @@ export function Home({ onNavigate }: HomeProps) {
       {/* ==================== HERO SECTION ==================== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black z-[5] pt-20">
         
-        {/* GRID OVERLAY */}
-        <div 
-          className="absolute inset-0 pointer-events-none z-[5]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '24px 24px',
-          }}
-        />
-
-        {/* FILM GRAIN TEXTURE */}
-        <div 
-          className="absolute inset-0 pointer-events-none z-[6] opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-          }}
-        />
-
         {/* LOCATION INFO - Top Right */}
         <motion.div
           className="absolute top-28 right-8 text-white/50 text-[10px] tracking-[0.4em] z-30"
@@ -220,7 +233,7 @@ export function Home({ onNavigate }: HomeProps) {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <img
-            src="/images/two-cows.png"
+            src="/images/dlalwl/two-cows.png"
             alt="Two Cows"
             className="w-full h-auto object-contain"
           />
@@ -415,48 +428,54 @@ export function Home({ onNavigate }: HomeProps) {
             </motion.button>
           </motion.div>
 
-          {/* Grid of 3 projects */}
+          {/* Grid of 6 projects (최신 6개) */}
           <div className="grid md:grid-cols-3 gap-8">
-            {portfolioProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="group cursor-pointer"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                onClick={() => onNavigate('work')}
-              >
-                {/* Project Image - 4:3 aspect ratio */}
-                <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-black">
-                  <img
-                    src={project.images.main}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <div className="text-white text-6xl opacity-0 group-hover:opacity-100 transition-opacity">
-                      →
+            {projects.slice(0, 6).map((project, index) => {
+              const projectId = useSanity ? (project as SanityPortfolio)._id : (project as any).id;
+              const mainImageUrl = useSanity 
+                ? urlFor((project as SanityPortfolio).mainImage).width(800).url()
+                : (project as any).images.main;
+              
+              return (
+                <motion.div
+                  key={projectId}
+                  className="group cursor-pointer"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  onClick={() => onNavigate('work')}
+                >
+                  {/* Project Image - 4:3 aspect ratio */}
+                  <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-black">
+                    <img
+                      src={mainImageUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <div className="text-white text-6xl opacity-0 group-hover:opacity-100 transition-opacity">
+                        →
+                      </div>
+                    </div>
+                    
+                    {/* Project Number Badge */}
+                    <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white px-4 py-2 border border-white/20">
+                      <div className="text-2xl">{String(index + 1).padStart(2, '0')}</div>
                     </div>
                   </div>
                   
-                  {/* Project Number Badge */}
-                  <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm text-white px-4 py-2 border border-white/20">
-                    <div className="text-2xl">{String(project.id).padStart(2, '0')}</div>
+                  {/* Project Info */}
+                  <div className="space-y-2">
+                    <div className="text-sm text-gray-500 tracking-widest">{project.year}</div>
+                    <h3 className="text-2xl text-white group-hover:text-[#4a5fdc] transition-colors">
+                      {project.title}
+                    </h3>
                   </div>
-                </div>
-                
-                {/* Project Info */}
-                <div className="space-y-2">
-                  <div className="text-sm text-gray-500 tracking-widest">{project.category} — {project.year}</div>
-                  <h3 className="text-2xl text-white group-hover:text-[#4a5fdc] transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-gray-400">{project.client}</p>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -526,7 +545,7 @@ export function Home({ onNavigate }: HomeProps) {
               transition={{ duration: 0.6 }}
             >
               <img
-                src="/images/scribble-bouquet.png"
+                src="/images/dlalwl/scribble-bouquet.png"
                 alt="Scribble Archive"
                 className="w-full h-full object-cover"
               />

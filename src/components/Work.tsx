@@ -1,8 +1,8 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { useState } from 'react';
 import { Instagram, Play, X } from 'lucide-react';
 import { portfolioProjects } from '../data/portfolio';
-import scribblePortrait from 'figma:asset/dcd95ebd7ba39833f0168136c6e6d7463db90156.png';
+import { getPortfolios, urlFor } from '../lib/sanity';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -10,10 +10,100 @@ interface WorkProps {
   onNavigate: (page: PageType) => void;
 }
 
-export function Work({ onNavigate }: WorkProps) {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+interface SanityPortfolio {
+  _id: string;
+  title: string;
+  year: string;
+  description: string;
+  mainImage: any;
+  images: Array<{ asset: any; alt?: string }>;
+  videoUrl?: string;
+  videoFile?: { url: string };
+  order?: number;
+}
 
-  const selectedProjectData = portfolioProjects.find(p => p.id === selectedProject);
+export function Work({ onNavigate }: WorkProps) {
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [displayedCount, setDisplayedCount] = useState(3); // 처음 3개만 표시
+  const [isLoading, setIsLoading] = useState(false);
+  const [sanityProjects, setSanityProjects] = useState<SanityPortfolio[]>([]);
+  const [useSanity, setUseSanity] = useState(true); // Sanity 사용 여부
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Sanity에서 포트폴리오 가져오기
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const projects = await getPortfolios();
+        if (projects && projects.length > 0) {
+          setSanityProjects(projects);
+          setUseSanity(true);
+        } else {
+          setUseSanity(false); // 데이터 없으면 로컬 데이터 사용
+        }
+      } catch (error) {
+        console.error('Sanity 데이터 로드 실패:', error);
+        setUseSanity(false); // 에러 시 로컬 데이터 사용
+      }
+    }
+    fetchProjects();
+  }, []);
+
+  // 모달이 열릴 때 비디오 음소거 해제
+  useEffect(() => {
+    if (selectedProject && videoRef.current) {
+      // 모달이 열린 후 비디오가 로드되면 음소거 해제
+      const handleCanPlay = () => {
+        if (videoRef.current) {
+          videoRef.current.muted = false;
+        }
+      };
+      
+      const video = videoRef.current;
+      if (video) {
+        video.addEventListener('canplay', handleCanPlay);
+        // 이미 로드된 경우 즉시 음소거 해제
+        if (video.readyState >= 2) {
+          video.muted = false;
+        }
+      }
+      
+      return () => {
+        if (video) {
+          video.removeEventListener('canplay', handleCanPlay);
+        }
+      };
+    }
+  }, [selectedProject]);
+
+  // 사용할 프로젝트 결정
+  const projects = useSanity ? sanityProjects : portfolioProjects;
+  const selectedProjectData = useSanity 
+    ? sanityProjects.find(p => p._id === selectedProject)
+    : portfolioProjects.find(p => p.id.toString() === selectedProject);
+  const displayedProjects = projects.slice(0, displayedCount);
+  const hasMore = displayedCount < projects.length;
+
+  // 무한 스크롤 구현
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isLoading || !hasMore) return;
+
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const threshold = document.documentElement.scrollHeight - 500; // 바닥에서 500px 전에 로드
+
+      if (scrollPosition >= threshold) {
+        setIsLoading(true);
+        setTimeout(() => {
+          setDisplayedCount(prev => prev + 3); // 3개씩 추가
+          setIsLoading(false);
+        }, 500); // 로딩 효과
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLoading, hasMore]);
 
   return (
     <div className="relative bg-black text-white min-h-screen pt-20">
@@ -22,7 +112,7 @@ export function Work({ onNavigate }: WorkProps) {
         {/* Background Image (4번) */}
         <div className="absolute inset-0 z-0">
           <motion.img
-            src={scribblePortrait}
+            src="/images/dlalwl/scribble-portrait.png"
             alt="Work Background"
             className="w-full h-full object-cover opacity-30"
             initial={{ scale: 1.2 }}
@@ -72,121 +162,165 @@ export function Work({ onNavigate }: WorkProps) {
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1400px] mx-auto">
           <div className="space-y-32">
-            {portfolioProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="group"
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: index * 0.2 }}
-              >
-                {/* Project Header */}
-                <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                  <div>
-                    <div className="text-6xl sm:text-7xl lg:text-9xl opacity-10 leading-none mb-4">
-                      {String(project.id).padStart(2, '0')}
-                    </div>
-                    <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-4">
-                      <span 
-                        className="text-transparent"
-                        style={{ WebkitTextStroke: '2px white' }}
-                      >
-                        {project.title}
-                      </span>
-                    </h2>
-                    <div className="flex flex-wrap gap-3 mb-4">
-                      {project.tags.map((tag, tagIndex) => (
-                        <div
-                          key={tagIndex}
-                          className="bg-white/5 border border-white/20 text-white text-xs px-4 py-2"
+            {displayedProjects.map((project, index) => {
+              const projectId = useSanity ? (project as SanityPortfolio)._id : (project as any).id;
+              const mainImageUrl = useSanity 
+                ? urlFor((project as SanityPortfolio).mainImage).width(1200).url()
+                : (project as any).images.main;
+              const image2Url = useSanity && (project as SanityPortfolio).images?.[0]
+                ? urlFor((project as SanityPortfolio).images[0].asset).width(800).url()
+                : (project as any).images?.image2;
+              const image3Url = useSanity && (project as SanityPortfolio).images?.[1]
+                ? urlFor((project as SanityPortfolio).images[1].asset).width(800).url()
+                : (project as any).images?.image3;
+              
+              return (
+                <motion.div
+                  key={projectId}
+                  className="group"
+                  initial={{ opacity: 0, y: 60 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: index * 0.2 }}
+                >
+                  {/* Project Header */}
+                  <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                    <div>
+                      <div className="text-6xl sm:text-7xl lg:text-9xl opacity-10 leading-none mb-4">
+                        {String(index + 1).padStart(2, '0')}
+                      </div>
+                      <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-4">
+                        <span 
+                          className="text-transparent"
+                          style={{ WebkitTextStroke: '2px white' }}
                         >
-                          {tag}
-                        </div>
-                      ))}
+                          {project.title}
+                        </span>
+                      </h2>
+                      <div className="text-gray-500 text-sm tracking-wider mb-2">
+                        {project.year}
+                      </div>
                     </div>
-                    <div className="text-gray-500 text-sm tracking-wider mb-2">
-                      {project.client} — {project.year}
-                    </div>
-                  </div>
-                  
+                    
                   <motion.div
-                    className="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl cursor-pointer"
-                    style={{ backgroundColor: project.color }}
+                    className="w-16 h-16 rounded-full bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] flex items-center justify-center text-white text-2xl cursor-pointer"
                     whileHover={{ scale: 1.2, rotate: 90 }}
-                    onClick={() => setSelectedProject(project.id)}
+                    onClick={() => setSelectedProject(projectId)}
                   >
                     →
                   </motion.div>
-                </div>
-
-                {/* Project Images Grid - All 3 images in 4:3 ratio */}
-                <div className="grid md:grid-cols-3 gap-6">
-                  {/* Main Image */}
-                  <motion.div
-                    className="md:col-span-2 relative aspect-[4/3] overflow-hidden bg-black cursor-pointer group"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.4 }}
-                    onClick={() => setSelectedProject(project.id)}
-                  >
-                    <img
-                      src={project.images.main}
-                      alt={`${project.title} - Main`}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="text-white text-sm tracking-widest">MAIN VIEW</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Secondary Images */}
-                  <div className="space-y-6">
-                    <motion.div
-                      className="relative aspect-[4/3] overflow-hidden bg-black cursor-pointer group"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.4 }}
-                      onClick={() => setSelectedProject(project.id)}
-                    >
-                      <img
-                        src={project.images.image2}
-                        alt={`${project.title} - Image 2`}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </motion.div>
-
-                    <motion.div
-                      className="relative aspect-[4/3] overflow-hidden bg-black cursor-pointer group"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.4 }}
-                      onClick={() => setSelectedProject(project.id)}
-                    >
-                      <img
-                        src={project.images.image3}
-                        alt={`${project.title} - Image 3`}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </motion.div>
                   </div>
-                </div>
 
-                {/* Project Description */}
-                <motion.div
-                  className="mt-8 max-w-3xl"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <p className="text-lg text-gray-300 leading-relaxed">
-                    {project.description}
-                  </p>
+                  {/* Project Images Grid - All 3 images in 4:3 ratio */}
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {/* Main Image */}
+                    <motion.div
+                      className="md:col-span-2 relative aspect-[4/3] overflow-hidden bg-black cursor-pointer group"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.4 }}
+                      onClick={() => setSelectedProject(projectId)}
+                    >
+                      <img
+                        src={mainImageUrl}
+                        alt={`${project.title} - Main`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="text-white text-sm tracking-widest">MAIN VIEW</div>
+                      </div>
+                    </motion.div>
+
+                    {/* Secondary Images */}
+                    <div className="space-y-6">
+                      {image2Url && (
+                        <motion.div
+                          className="relative aspect-[4/3] overflow-hidden bg-black cursor-pointer group"
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 0.4 }}
+                          onClick={() => setSelectedProject(projectId)}
+                        >
+                          <img
+                            src={image2Url}
+                            alt={`${project.title} - Image 2`}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </motion.div>
+                      )}
+
+                      {image3Url && (
+                        <motion.div
+                          className="relative aspect-[4/3] overflow-hidden bg-black cursor-pointer group"
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 0.4 }}
+                          onClick={() => setSelectedProject(projectId)}
+                        >
+                          <img
+                            src={image3Url}
+                            alt={`${project.title} - Image 3`}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </motion.div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Project Description */}
+                  <motion.div
+                    className="mt-8 max-w-3xl"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <p className="text-lg text-gray-300 leading-relaxed">
+                      {project.description}
+                    </p>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
+
+          {/* Loading Indicator */}
+          {isLoading && (
+            <motion.div
+              className="flex justify-center items-center py-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="flex gap-2">
+                <motion.div
+                  className="w-3 h-3 bg-[#4a5fdc] rounded-full"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                />
+                <motion.div
+                  className="w-3 h-3 bg-[#4a5fdc] rounded-full"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                />
+                <motion.div
+                  className="w-3 h-3 bg-[#4a5fdc] rounded-full"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                />
+              </div>
+            </motion.div>
+          )}
+
+          {/* End Message */}
+          {!hasMore && portfolioProjects.length > 3 && (
+            <motion.div
+              className="text-center py-12 text-gray-500"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="text-sm tracking-widest">모든 포트폴리오를 확인했습니다</div>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -218,39 +352,121 @@ export function Work({ onNavigate }: WorkProps) {
             <div className="space-y-8">
               <div>
                 <h2 className="text-5xl sm:text-6xl mb-4">{selectedProjectData.title}</h2>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {selectedProjectData.tags.map((tag, index) => (
-                    <div key={index} className="bg-white/5 border border-white/20 px-3 py-1 text-xs">
-                      {tag}
-                    </div>
-                  ))}
-                </div>
                 <div className="text-gray-400 mb-6">
-                  {selectedProjectData.client} — {selectedProjectData.year}
+                  {selectedProjectData.year}
                 </div>
                 <p className="text-lg text-gray-300 leading-relaxed">
                   {selectedProjectData.description}
                 </p>
               </div>
 
+              {/* Video (if exists) */}
+              {useSanity && (selectedProjectData as SanityPortfolio).videoUrl && (
+                <div className="w-full aspect-video bg-black rounded overflow-hidden">
+                  <iframe
+                    src={
+                      (() => {
+                        const videoUrl = (selectedProjectData as SanityPortfolio).videoUrl;
+                        if (!videoUrl) return '';
+                        
+                        let embedUrl = '';
+                        if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                          // YouTube URL 처리
+                          let videoId = '';
+                          if (videoUrl.includes('watch?v=')) {
+                            videoId = videoUrl.split('watch?v=')[1].split('&')[0];
+                          } else if (videoUrl.includes('youtu.be/')) {
+                            videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
+                          } else if (videoUrl.includes('embed/')) {
+                            videoId = videoUrl.split('embed/')[1].split('?')[0];
+                          }
+                          // 브라우저 정책상 자동재생은 음소거로 시작 (사용자가 플레이어에서 음소거 해제 가능)
+                          embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0`;
+                        } else if (videoUrl.includes('vimeo.com')) {
+                          // Vimeo URL 처리
+                          let videoId = '';
+                          if (videoUrl.includes('player.vimeo.com/video/')) {
+                            videoId = videoUrl.split('player.vimeo.com/video/')[1].split('?')[0];
+                          } else if (videoUrl.includes('vimeo.com/')) {
+                            videoId = videoUrl.split('vimeo.com/')[1].split('?')[0];
+                          }
+                          // 브라우저 정책상 자동재생은 음소거로 시작 (사용자가 플레이어에서 음소거 해제 가능)
+                          embedUrl = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1`;
+                        } else {
+                          embedUrl = videoUrl;
+                        }
+                        return embedUrl;
+                      })()
+                    }
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+
+              {useSanity && (selectedProjectData as SanityPortfolio).videoFile?.url && (
+                <div className="w-full">
+                  <video
+                    ref={videoRef}
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full aspect-video bg-black rounded"
+                    src={(selectedProjectData as SanityPortfolio).videoFile.url}
+                    onPlay={() => {
+                      // 재생 시작 시 음소거 해제 시도
+                      if (videoRef.current) {
+                        videoRef.current.muted = false;
+                      }
+                    }}
+                  >
+                    브라우저가 비디오를 지원하지 않습니다.
+                  </video>
+                </div>
+              )}
+
               {/* All Images */}
               <div className="space-y-6">
                 <img
-                  src={selectedProjectData.images.main}
+                  src={useSanity 
+                    ? urlFor((selectedProjectData as SanityPortfolio).mainImage).width(1200).url()
+                    : (selectedProjectData as any).images.main
+                  }
                   alt={`${selectedProjectData.title} - Main`}
                   className="w-full aspect-[4/3] object-cover"
                 />
                 <div className="grid sm:grid-cols-2 gap-6">
-                  <img
-                    src={selectedProjectData.images.image2}
-                    alt={`${selectedProjectData.title} - Image 2`}
-                    className="w-full aspect-[4/3] object-cover"
-                  />
-                  <img
-                    src={selectedProjectData.images.image3}
-                    alt={`${selectedProjectData.title} - Image 3`}
-                    className="w-full aspect-[4/3] object-cover"
-                  />
+                  {useSanity && (selectedProjectData as SanityPortfolio).images?.[0] && (
+                    <img
+                      src={urlFor((selectedProjectData as SanityPortfolio).images[0].asset).width(800).url()}
+                      alt={`${selectedProjectData.title} - Image 2`}
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  )}
+                  {!useSanity && (selectedProjectData as any).images?.image2 && (
+                    <img
+                      src={(selectedProjectData as any).images.image2}
+                      alt={`${selectedProjectData.title} - Image 2`}
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  )}
+                  {useSanity && (selectedProjectData as SanityPortfolio).images?.[1] && (
+                    <img
+                      src={urlFor((selectedProjectData as SanityPortfolio).images[1].asset).width(800).url()}
+                      alt={`${selectedProjectData.title} - Image 3`}
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  )}
+                  {!useSanity && (selectedProjectData as any).images?.image3 && (
+                    <img
+                      src={(selectedProjectData as any).images.image3}
+                      alt={`${selectedProjectData.title} - Image 3`}
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  )}
                 </div>
               </div>
             </div>

@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Instagram, TrendingUp, Lightbulb, Code, Palette } from 'lucide-react';
-import scribbleMarket from 'figma:asset/9c98a73a4f6fe1ac0f31aa9945d703d3874078a3.png';
 
 type PageType = 'home' | 'work' | 'insights' | 'about' | 'contact';
 
@@ -70,7 +69,7 @@ export function Insights({ onNavigate }: InsightsProps) {
         {/* Background Image (8번) */}
         <div className="absolute inset-0 z-0">
           <motion.img
-            src={scribbleMarket}
+            src="/images/dlalwl/scribble-market.png"
             alt="Insights Background"
             className="w-full h-full object-cover opacity-20"
             initial={{ scale: 1.2, rotate: -5 }}

@@ -175,68 +175,109 @@ export default function App() {
           </div>
         </nav>
 
-        {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              className="lg:hidden fixed inset-0 top-20 bg-black/95 backdrop-blur-2xl"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+      </motion.header>
+
+      {/* Mobile Menu Overlay - Outside header! */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="fixed top-0 left-0 right-0 bottom-0 z-[9999]"
+            style={{ 
+              width: '100vw', 
+              height: '100vh',
+              backgroundColor: '#000000',
+              position: 'fixed',
+              zIndex: 9999,
+              opacity: 1
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Close Button */}
+            <motion.button
+              className="absolute top-6 right-6 w-14 h-14 flex items-center justify-center text-white bg-black/50 rounded-full hover:bg-white/10 transition-colors"
+              style={{ zIndex: 99999 }}
+              onClick={() => setMenuOpen(false)}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              <div className="flex flex-col items-center justify-center h-full gap-8 px-8">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    onClick={() => {
-                      setCurrentPage(item.id);
-                      setMenuOpen(false);
-                    }}
-                    className="relative text-center"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ delay: index * 0.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {/* Mobile Number */}
-                    <div className="text-sm text-gray-600 mb-2 tracking-widest">
-                      {item.number}
-                    </div>
-                    
-                    {/* Mobile Label */}
-                    <div className={`text-4xl tracking-tight transition-colors ${
-                      currentPage === item.id 
-                        ? 'text-white' 
-                        : 'text-gray-500'
-                    }`}>
-                      {item.label}
-                    </div>
-                    
-                    {/* Active Indicator */}
-                    {currentPage === item.id && (
-                      <motion.div
-                        className="h-1 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] mt-4"
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ delay: 0.2 }}
-                      />
-                    )}
-                  </motion.button>
-                ))}
-                
-                {/* Mobile Menu Footer */}
-                <div className="absolute bottom-12 left-0 right-0 text-center">
-                  <div className="text-gray-600 text-xs tracking-widest">
-                    TODD — 2025
+              <div className="relative w-6 h-6">
+                <span
+                  className="absolute w-full h-0.5 bg-white top-1/2 left-0"
+                  style={{ transform: 'rotate(45deg) translateY(-50%)' }}
+                />
+                <span
+                  className="absolute w-full h-0.5 bg-white top-1/2 left-0"
+                  style={{ transform: 'rotate(-45deg) translateY(-50%)' }}
+                />
+              </div>
+            </motion.button>
+
+            <div className="flex flex-col items-center justify-center h-full gap-10 px-8 relative z-[10000]">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentPage(item.id);
+                    setMenuOpen(false);
+                  }}
+                  className="relative text-center"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {/* Mobile Number */}
+                  <div className="text-sm text-gray-500 mb-2 tracking-widest">
+                    {item.number}
                   </div>
+                  
+                  {/* Mobile Label */}
+                  <div className={`text-4xl tracking-tight transition-colors ${
+                    currentPage === item.id 
+                      ? 'text-white' 
+                      : 'text-gray-400'
+                  }`}>
+                    {item.label}
+                  </div>
+                  
+                  {/* Active Indicator */}
+                  {currentPage === item.id && (
+                    <motion.div
+                      className="h-1 bg-gradient-to-r from-[#4a5fdc] to-[#ff6b6b] mt-4 mx-auto"
+                      style={{ width: '80px' }}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.2 }}
+                    />
+                  )}
+                </motion.button>
+              ))}
+              
+              {/* Mobile Menu Footer */}
+              <div className="absolute bottom-12 left-0 right-0 flex justify-center">
+                <div className="flex items-center gap-2">
+                  {/* Star Symbol with Est. */}
+                  <div className="flex flex-col items-center">
+                    <span className="text-lg text-white">✹</span>
+                    <span className="text-[8px] text-gray-500 tracking-wider mt-0.5">EST. 2025</span>
+                  </div>
+                  
+                  {/* TODD Text */}
+                  <h2 className="text-2xl tracking-tighter text-white">
+                    TODD
+                  </h2>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.header>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Page Content with Animation */}
       <AnimatePresence mode="wait">

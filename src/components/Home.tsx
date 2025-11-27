@@ -48,33 +48,6 @@ export function Home({ onNavigate }: HomeProps) {
 
   return (
     <div className="relative bg-black text-white overflow-hidden">
-      {/* BRAND LOGO - Absolute positioned at top level */}
-      <motion.div
-        className="absolute top-[50vh] left-[51%] -translate-x-1/2 -translate-y-1/2 z-[100]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ 
-          delay: 1.8, 
-          duration: 1.2,
-        }}
-      >
-        {/* Logo Container */}
-        <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center">
-          <img
-            src="/images/brand-logo/todd-logo.png"
-            alt="TODD Logo"
-            className="w-full h-full object-contain"
-          />
-        </div>
-
-        {/* Text Under Logo */}
-        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
-          <div className="text-white text-xs tracking-[0.3em] opacity-70">
-            EST. 2025
-          </div>
-        </div>
-      </motion.div>
-
       {/* ==================== HERO SECTION ==================== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black z-[5] pt-20">
         
@@ -111,16 +84,16 @@ export function Home({ onNavigate }: HomeProps) {
           001 / HOMEPAGE
         </motion.div>
 
-        {/* TWO COWS - Single Image */}
+        {/* HERO IMAGE - Main Visual with Logo and Torn Effect */}
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl z-10"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl z-10"
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img
-            src="/images/dlalwl/two-cows.png"
-            alt="Two Cows"
+            src="/images/dlalwl/tow-cows.png"
+            alt="TODD Studio - Two Cows"
             className="w-full h-auto object-contain"
           />
         </motion.div>

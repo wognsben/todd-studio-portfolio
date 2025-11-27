@@ -1,0 +1,225 @@
+========================================
+TODD STUDIO - EmailJS Template (Mobile)
+========================================
+
+📧 Subject (제목):
+[TODD Studio] {{from_name}}님의 프로젝트 문의
+
+📝 Email Body (HTML - Mobile Optimized):
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #1a1a1a;
+      -webkit-text-size-adjust: 100%;
+    }
+    .container {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      padding: 24px 16px;
+      text-align: center;
+      border-bottom: 3px solid transparent;
+      border-image: linear-gradient(90deg, #4a5fdc, #ff6b6b) 1;
+    }
+    .logo {
+      font-size: 24px;
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      margin: 0;
+    }
+    .tagline {
+      color: #999999;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .content {
+      padding: 20px 16px;
+    }
+    .greeting {
+      font-size: 15px;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .info-card {
+      background: #f8f9fa;
+      border-left: 3px solid #4a5fdc;
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+    .info-label {
+      font-size: 10px;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .info-value {
+      font-size: 14px;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .message-box {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 16px 0;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: #2a2a2a;
+      font-size: 14px;
+    }
+    .reply-button {
+      display: block;
+      background: linear-gradient(135deg, #4a5fdc, #ff6b6b);
+      color: #ffffff !important;
+      padding: 14px 24px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 14px;
+    }
+    .footer {
+      background: #f8f9fa;
+      padding: 24px 16px;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 20px;
+    }
+    .footer-text {
+      font-size: 13px;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .contact-info {
+      font-size: 11px;
+      color: #999999;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+    @media only screen and (max-width: 480px) {
+      .logo {
+        font-size: 20px;
+      }
+      .greeting {
+        font-size: 14px;
+      }
+      .info-value {
+        font-size: 13px;
+      }
+      .message-box {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="logo">✹ TODD</h1>
+      <p class="tagline">Design × Code</p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="greeting">
+        안녕하세요! 🎨<br>
+        <strong>{{from_name}}</strong>님의<br>
+        프로젝트 문의가 도착했습니다.
+      </div>
+
+      <div class="info-card">
+        <div class="info-label">📌 문의자 정보</div>
+        <div class="info-value">
+          <strong>이름</strong><br>
+          {{from_name}}
+        </div>
+        <div class="info-value">
+          <strong>이메일</strong><br>
+          {{from_email}}
+        </div>
+        <div class="info-value">
+          <strong>회사/소속</strong><br>
+          {{company}}
+        </div>
+      </div>
+
+      <div class="info-label" style="margin: 16px 0 8px 0;">💬 문의 내용</div>
+      <div class="message-box">{{message}}</div>
+
+      <a href="mailto:{{from_email}}" class="reply-button">답장하기 →</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-text">
+        빠른 시일 내에<br>
+        답변 드리겠습니다 🚀
+      </div>
+      <div class="contact-info">
+        TODD Studio<br>
+        Seoul, South Korea<br>
+        wognsben1997@naver.com
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+========================================
+반응형 템플릿 (Desktop + Mobile 통합)
+========================================
+
+위의 Mobile 버전은 자동으로 데스크톱에도 대응됩니다.
+EmailJS에서는 Mobile 버전 하나만 사용하시면 됩니다!
+
+모바일 최적화 특징:
+✓ 작은 화면에 맞는 폰트 크기
+✓ 터치하기 쉬운 버튼 크기
+✓ 읽기 편한 라인 간격
+✓ 자동 줄바꿈 처리
+✓ 미디어 쿼리로 480px 이하 최적화
+
+
+========================================
+EmailJS 설정 단계:
+========================================
+
+1. EmailJS Dashboard → Email Templates
+2. template_hrt46xv 클릭
+3. "Edit" 클릭
+4. Subject: [TODD Studio] {{from_name}}님의 프로젝트 문의
+5. Content → "HTML" 탭
+6. 위의 Mobile 버전 HTML 전체 복사
+7. "Test it" 버튼으로 테스트
+8. Save!
+
+💡 Tip: Mobile 버전이 Desktop에서도 잘 보입니다!
+

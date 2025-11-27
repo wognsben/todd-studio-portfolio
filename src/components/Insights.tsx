@@ -71,12 +71,12 @@ export function Insights({ onNavigate }: InsightsProps) {
           <motion.img
             src="/images/dlalwl/scribble-market.png"
             alt="Insights Background"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-35"
             initial={{ scale: 1.2, rotate: -5 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ duration: 1.5 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black" />
         </div>
 
         {/* Hero Content */}

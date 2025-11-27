@@ -24,9 +24,8 @@ export function Contact({ onNavigate }: ContactProps) {
 
   // EmailJS 초기화
   useEffect(() => {
-    // EmailJS Public Key를 여기에 입력하세요
-    const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-    if (PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'PuHHOhWsnpPNwSHiJ';
+    if (PUBLIC_KEY && PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       emailjs.init(PUBLIC_KEY);
     }
   }, []);
@@ -38,12 +37,18 @@ export function Contact({ onNavigate }: ContactProps) {
     
     try {
       // EmailJS 설정 확인
-      const SERVICE_ID = 'YOUR_SERVICE_ID';
-      const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-      const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+      const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_0oe7qmn';
+      const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_8lupbfl';
+      const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'PuHHOhWsnpPNwSHiJ';
+      
+      console.log('EmailJS 설정:', {
+        SERVICE_ID,
+        TEMPLATE_ID,
+        PUBLIC_KEY: PUBLIC_KEY ? '설정됨' : '없음'
+      });
       
       // EmailJS가 설정되지 않았으면 mailto 사용
-      if (SERVICE_ID === 'YOUR_SERVICE_ID' || TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
         // mailto 방식으로 이메일 전송
         const emailSubject = `[TODD Studio] ${formData.name}님의 프로젝트 문의`;
         const emailBody = `
